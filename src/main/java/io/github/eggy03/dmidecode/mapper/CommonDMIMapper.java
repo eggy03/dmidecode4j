@@ -39,7 +39,7 @@ Processor Information
 
         StringBuilder key = new StringBuilder();
         // for single-line values
-        Object value = new Object();
+        Object value = null;
         // for multi-line values
         List<Object> values = new ArrayList<>();
 
@@ -122,7 +122,7 @@ Cache Information
 
         StringBuilder key = new StringBuilder();
         // for single-line values
-        Object value = new Object();
+        Object value = null;
         // for multi-line values
         List<Object> values = new ArrayList<>();
 

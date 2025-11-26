@@ -5,12 +5,14 @@ import io.github.eggy03.dmidecode.entity.processor.DMIProcessor;
 import io.github.eggy03.dmidecode.mapper.processor.DMIProcessorMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIService;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class DMIProcessorService implements OptionalCommonDMIService<DMIProcessor> {
 
     @Override
+    @NotNull
     public Optional<DMIProcessor> get() {
         return new DMIProcessorMapper().mapToEntity(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), 10),
