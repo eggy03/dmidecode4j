@@ -1,7 +1,6 @@
 package io.github.eggy03.dmidecode.utility;
 
 import io.github.eggy03.dmidecode.exception.TerminalExecutionException;
-import io.github.eggy03.dmidecode.exception.TerminalTimeoutException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.exec.CommandLine;
@@ -34,18 +33,18 @@ public class TerminalUtility {
         executor.setWatchdog(watchdog);
 
         try {
-            executor.execute(cmdLine);
-            return !err.toString().isEmpty() ? err.toString() : result.toString();
+            int exitCode = executor.execute(cmdLine);
+            log.debug("\nCommand Executed: {}\nExit code: {}\nError Stream: {}\nResult Stream: {}\n", command, exitCode, err.toString(), result.toString());
+            return result.toString();
         } catch (ExecuteException e) {
-            if (watchdog.killedProcess()) {
-                throw new TerminalTimeoutException("Timed out after " + timeoutSeconds + " seconds while executing the following command:\n" + command, e);
-            } else {
-                log.debug("Execution Failure! Process executing the following command:\n{}\n did not finish executing properly", command);
-                throw new TerminalExecutionException(err.toString(), e);
-            }
+            String reason = watchdog.killedProcess() ?
+                    "\nProcess executing the following command: " + command + "\nWas killed after a timeout of " + timeoutSeconds + " seconds\n" :
+                    "\nProcess executing the following command: " + command + "\nExited with a non-zero exit code\nTerminal Error Output: "+ err.toString();
+
+            throw new TerminalExecutionException(reason, e);
         } catch (IOException e) {
-            log.debug("An I/O Exception occurred during executing the following command:\n{}", command);
-            throw new TerminalExecutionException(err.toString(), e);
+            String reason = "An I/O Exception occurred during executing the following command:\n" + command;
+            throw new TerminalExecutionException(reason, e);
         }
     }
 }
