@@ -52,6 +52,6 @@ public enum DMIType {
     private final int value;
 
     public static String getCommand(int dmiType){
-        return "dmidecode --type "+dmiType;
+        return "sudo /usr/sbin/dmidecode --type "+dmiType;
     }
 }
