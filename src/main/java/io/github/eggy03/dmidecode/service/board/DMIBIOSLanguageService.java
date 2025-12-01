@@ -1,8 +1,8 @@
-package io.github.eggy03.dmidecode.service.bios;
+package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.constant.DMIType;
-import io.github.eggy03.dmidecode.entity.bios.DMIBIOSLanguage;
-import io.github.eggy03.dmidecode.mapper.bios.DMIBIOSLanguageMapper;
+import io.github.eggy03.dmidecode.entity.board.DMIBIOSLanguage;
+import io.github.eggy03.dmidecode.mapper.board.DMIBIOSLanguageMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIService;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 

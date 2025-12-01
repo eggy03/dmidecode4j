@@ -1,4 +1,4 @@
-package io.github.eggy03.dmidecode.entity.bios;
+package io.github.eggy03.dmidecode.entity.board;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
