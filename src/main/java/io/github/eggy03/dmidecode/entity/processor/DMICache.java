@@ -1,4 +1,4 @@
-package io.github.eggy03.dmidecode.entity.cache;
+package io.github.eggy03.dmidecode.entity.processor;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;

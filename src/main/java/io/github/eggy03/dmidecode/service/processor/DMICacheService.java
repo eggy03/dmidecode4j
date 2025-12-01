@@ -1,8 +1,8 @@
-package io.github.eggy03.dmidecode.service.cache;
+package io.github.eggy03.dmidecode.service.processor;
 
 import io.github.eggy03.dmidecode.constant.DMIType;
-import io.github.eggy03.dmidecode.entity.cache.DMICache;
-import io.github.eggy03.dmidecode.mapper.cache.DMICacheMapper;
+import io.github.eggy03.dmidecode.entity.processor.DMICache;
+import io.github.eggy03.dmidecode.mapper.processor.DMICacheMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIService;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.jetbrains.annotations.NotNull;
