@@ -34,12 +34,12 @@ public class TerminalUtility {
 
         try {
             int exitCode = executor.execute(cmdLine);
-            log.debug("\nCommand Executed: {}\nExit code: {}\nError Stream: {}\nResult Stream: {}\n", command, exitCode, err.toString(), result.toString());
+            log.debug("\nCommand Executed: {}\nExit code: {}\nError Stream: {}\nResult Stream: {}\n", command, exitCode, err, result);
             return result.toString();
         } catch (ExecuteException e) {
             String reason = watchdog.killedProcess() ?
                     "\nProcess executing the following command: " + command + "\nWas killed after a timeout of " + timeoutSeconds + " seconds\n" :
-                    "\nProcess executing the following command: " + command + "\nExited with a non-zero exit code\nTerminal Error Output: "+ err.toString();
+                    "\nProcess executing the following command: " + command + "\nExited with a non-zero exit code\nTerminal Error Output: "+ err;
 
             throw new TerminalExecutionException(reason, e);
         } catch (IOException e) {
