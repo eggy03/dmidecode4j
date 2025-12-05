@@ -15,8 +15,7 @@ public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemo
     @NotNull
     public List<DMIMemoryDevice> get() {
         return new DMIMemoryDeviceMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), 10),
-                DMIMemoryDevice.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), 10)
         );
     }
 
@@ -24,8 +23,7 @@ public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemo
     @NotNull
     public List<DMIMemoryDevice> get(long timeout) {
         return new DMIMemoryDeviceMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), timeout),
-                DMIMemoryDevice.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), timeout)
         );
     }
 }

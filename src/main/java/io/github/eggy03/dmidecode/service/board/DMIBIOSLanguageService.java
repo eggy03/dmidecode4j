@@ -15,8 +15,7 @@ public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface
     @NotNull
     public Optional<DMIBIOSLanguage> get() {
         return new DMIBIOSLanguageMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS_LANGUAGE.getValue()), 10),
-                DMIBIOSLanguage.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS_LANGUAGE.getValue()), 10)
         );
     }
 
@@ -24,8 +23,7 @@ public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface
     @NotNull
     public Optional<DMIBIOSLanguage> get(long timeout) {
         return new DMIBIOSLanguageMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS_LANGUAGE.getValue()), timeout),
-                DMIBIOSLanguage.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS_LANGUAGE.getValue()), timeout)
         );
     }
 }

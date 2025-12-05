@@ -15,8 +15,7 @@ public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIC
     @NotNull
     public Optional<DMIChassis> get() {
         return new DMIChassisMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CHASSIS.getValue()), 10),
-                DMIChassis.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CHASSIS.getValue()), 10)
         );
     }
 
@@ -24,8 +23,7 @@ public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIC
     @NotNull
     public Optional<DMIChassis> get(long timeout) {
         return new DMIChassisMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CHASSIS.getValue()), timeout),
-                DMIChassis.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CHASSIS.getValue()), timeout)
         );
     }
 }

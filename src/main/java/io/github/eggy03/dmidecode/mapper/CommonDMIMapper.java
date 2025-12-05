@@ -14,6 +14,8 @@ public interface CommonDMIMapper<S> {
 
     Gson GSON = new Gson();
 
+    public Class<S> getType();
+
     /* Example Schema
     # dmidecode 3.6
 Getting SMBIOS data from sysfs.
@@ -33,7 +35,7 @@ Processor Information
 		Multi-Core
 
      */
-    default Optional<S> mapToEntity(String rawDMIData, Class<S> entityClass) {
+    default Optional<S> mapToEntity(String rawDMIData) {
 
         Map<String, Object> keyValueMap = new LinkedHashMap<>();
 
@@ -80,7 +82,7 @@ Processor Information
 
         // convert the kv map to JSON and deserialize into an entity class
         JsonElement mapElement = GSON.toJsonTree(keyValueMap);
-        return Optional.ofNullable(GSON.fromJson(mapElement, entityClass));
+        return Optional.ofNullable(GSON.fromJson(mapElement, getType()));
     }
 
     /*
@@ -114,7 +116,7 @@ Cache Information
 	Associativity: 16-way Set-associative
 
      */
-    default List<S> mapToList(String rawDMIData, Class<S> entityClass) {
+    default List<S> mapToList(String rawDMIData) {
 
         List<S> entityList = new ArrayList<>();
 
@@ -167,7 +169,7 @@ Cache Information
             // convert each kv map into a JSON and then deserialize into an entity class
             if (!keyValueMap.isEmpty()) { // prevent empty entities from being serialized
                 JsonElement mapElement = GSON.toJsonTree(keyValueMap);
-                S entity = GSON.fromJson(mapElement, entityClass);
+                S entity = GSON.fromJson(mapElement, getType());
                 if (entity != null)
                     entityList.add(entity);
             }

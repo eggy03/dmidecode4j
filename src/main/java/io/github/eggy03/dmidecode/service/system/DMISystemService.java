@@ -15,8 +15,7 @@ public class DMISystemService implements OptionalCommonDMIServiceInterface<DMISy
     @NotNull
     public Optional<DMISystem> get() {
         return new DMISystemMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), 10),
-                DMISystem.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), 10)
         );
     }
 
@@ -24,8 +23,7 @@ public class DMISystemService implements OptionalCommonDMIServiceInterface<DMISy
     @NotNull
     public Optional<DMISystem> get(long timeout) {
         return new DMISystemMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), timeout),
-                DMISystem.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), timeout)
         );
     }
 }

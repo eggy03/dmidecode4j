@@ -13,16 +13,14 @@ public class DMIPortConnectionInformationService implements CommonDMIServiceInte
     @Override
     public List<DMIPortConnectorInformation> get() {
         return new DMIPortConnectionInformationMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), 10),
-                DMIPortConnectorInformation.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), 10)
         );
     }
 
     @Override
     public List<DMIPortConnectorInformation> get(long timeout) {
         return new DMIPortConnectionInformationMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), timeout),
-                DMIPortConnectorInformation.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), timeout)
         );
     }
 }

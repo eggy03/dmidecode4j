@@ -15,8 +15,7 @@ public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DM
     @NotNull
     public Optional<DMIBaseboard> get() {
         return new DMIBaseboardMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), 10),
-                DMIBaseboard.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), 10)
         );
     }
 
@@ -24,8 +23,7 @@ public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DM
     @NotNull
     public Optional<DMIBaseboard> get(long timeout) {
         return new DMIBaseboardMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), timeout),
-                DMIBaseboard.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), timeout)
         );
     }
 }

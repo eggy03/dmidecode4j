@@ -14,8 +14,7 @@ public class DMIBIOSService implements CommonDMIServiceInterface<DMIBIOS> {
     @NotNull
     public List<DMIBIOS> get() {
         return new DMIBIOSMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS.getValue()), 10),
-                DMIBIOS.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS.getValue()), 10)
         );
     }
 
@@ -23,8 +22,7 @@ public class DMIBIOSService implements CommonDMIServiceInterface<DMIBIOS> {
     @NotNull
     public List<DMIBIOS> get(long timeout) {
         return new DMIBIOSMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS.getValue()), timeout),
-                DMIBIOS.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS.getValue()), timeout)
         );
     }
 }

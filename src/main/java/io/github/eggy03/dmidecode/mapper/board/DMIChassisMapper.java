@@ -4,4 +4,8 @@ import io.github.eggy03.dmidecode.entity.board.DMIChassis;
 import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 
 public class DMIChassisMapper implements CommonDMIMapper<DMIChassis> {
+    @Override
+    public Class<DMIChassis> getType() {
+        return DMIChassis.class;
+    }
 }

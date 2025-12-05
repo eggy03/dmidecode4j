@@ -15,8 +15,7 @@ public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
     @NotNull
     public List<DMICache> get() {
         return new DMICacheMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), 10),
-                DMICache.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), 10)
         );
     }
 
@@ -24,8 +23,7 @@ public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
     @NotNull
     public List<DMICache> get(long timeout) {
         return new DMICacheMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), timeout),
-                DMICache.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), timeout)
         );
     }
 }

@@ -12,16 +12,14 @@ public class DMISystemSlotsService implements CommonDMIServiceInterface<DMISyste
     @Override
     public List<DMISystemSlots> get() {
         return new DMISystemSlotsMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM_SLOTS.getValue()), 10),
-                DMISystemSlots.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM_SLOTS.getValue()), 10)
         );
     }
 
     @Override
     public List<DMISystemSlots> get(long timeout) {
         return new DMISystemSlotsMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM_SLOTS.getValue()), timeout),
-                DMISystemSlots.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM_SLOTS.getValue()), timeout)
         );
     }
 }

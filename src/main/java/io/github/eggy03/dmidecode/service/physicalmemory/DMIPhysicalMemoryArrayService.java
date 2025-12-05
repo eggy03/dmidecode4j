@@ -12,16 +12,14 @@ public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceIn
     @Override
     public Optional<DMIPhysicalMemoryArray> get() {
         return new DMIPhysicalMemoryArrayMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PHYSICAL_MEMORY_ARRAY.getValue()), 10),
-                DMIPhysicalMemoryArray.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PHYSICAL_MEMORY_ARRAY.getValue()), 10)
         );
     }
 
     @Override
     public Optional<DMIPhysicalMemoryArray> get(long timeout) {
         return new DMIPhysicalMemoryArrayMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PHYSICAL_MEMORY_ARRAY.getValue()), timeout),
-                DMIPhysicalMemoryArray.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PHYSICAL_MEMORY_ARRAY.getValue()), timeout)
         );
     }
 }

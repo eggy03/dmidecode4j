@@ -15,8 +15,7 @@ public class DMIProcessorService implements OptionalCommonDMIServiceInterface<DM
     @NotNull
     public Optional<DMIProcessor> get() {
         return new DMIProcessorMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), 10),
-                DMIProcessor.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), 10)
         );
     }
 
@@ -24,8 +23,7 @@ public class DMIProcessorService implements OptionalCommonDMIServiceInterface<DM
     @NotNull
     public Optional<DMIProcessor> get(long timeout) {
         return new DMIProcessorMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), timeout),
-                DMIProcessor.class
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), timeout)
         );
     }
 
