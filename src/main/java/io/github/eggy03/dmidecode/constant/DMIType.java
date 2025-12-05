@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum DMIType {
 
+    BIOS(0),
     SYSTEM(1),
     BASEBOARD(2),
     CHASSIS(3),
