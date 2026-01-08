@@ -8,6 +8,7 @@ import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,7 +18,10 @@ import java.time.Duration;
 @Slf4j
 public class TerminalUtility {
 
-    public static String executeCommand(String command, long timeoutSeconds) {
+    public static String executeCommand(@NotNull String command, long timeoutSeconds) {
+
+        if(timeoutSeconds<0)
+            throw new IllegalArgumentException("Timeout cannot be negative");
 
         CommandLine cmdLine = new CommandLine("bash");
         cmdLine.addArgument("-c");

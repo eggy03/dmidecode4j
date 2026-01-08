@@ -13,17 +13,10 @@ public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DM
 
     @Override
     @NotNull
-    public Optional<DMIBaseboard> get() {
-        return new DMIBaseboardMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), 10)
-        );
-    }
-
-    @Override
-    @NotNull
     public Optional<DMIBaseboard> get(long timeout) {
         return new DMIBaseboardMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), timeout)
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), timeout),
+                DMIBaseboard.class
         );
     }
 }

@@ -13,17 +13,10 @@ public class DMIProcessorService implements OptionalCommonDMIServiceInterface<DM
 
     @Override
     @NotNull
-    public Optional<DMIProcessor> get() {
-        return new DMIProcessorMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), 10)
-        );
-    }
-
-    @Override
-    @NotNull
     public Optional<DMIProcessor> get(long timeout) {
         return new DMIProcessorMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), timeout)
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), timeout),
+                DMIProcessor.class
         );
     }
 

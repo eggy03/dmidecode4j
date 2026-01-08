@@ -13,17 +13,10 @@ public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
 
     @Override
     @NotNull
-    public List<DMICache> get() {
-        return new DMICacheMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), 10)
-        );
-    }
-
-    @Override
-    @NotNull
     public List<DMICache> get(long timeout) {
         return new DMICacheMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), timeout)
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), timeout),
+                DMICache.class
         );
     }
 }

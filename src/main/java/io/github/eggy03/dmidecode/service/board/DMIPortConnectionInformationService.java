@@ -11,16 +11,10 @@ import java.util.List;
 public class DMIPortConnectionInformationService implements CommonDMIServiceInterface<DMIPortConnectorInformation> {
 
     @Override
-    public List<DMIPortConnectorInformation> get() {
-        return new DMIPortConnectionInformationMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), 10)
-        );
-    }
-
-    @Override
     public List<DMIPortConnectorInformation> get(long timeout) {
         return new DMIPortConnectionInformationMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), timeout)
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), timeout),
+                DMIPortConnectorInformation.class
         );
     }
 }

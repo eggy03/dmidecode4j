@@ -13,17 +13,10 @@ public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemo
 
     @Override
     @NotNull
-    public List<DMIMemoryDevice> get() {
-        return new DMIMemoryDeviceMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), 10)
-        );
-    }
-
-    @Override
-    @NotNull
     public List<DMIMemoryDevice> get(long timeout) {
         return new DMIMemoryDeviceMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), timeout)
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), timeout),
+                DMIMemoryDevice.class
         );
     }
 }

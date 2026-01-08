@@ -9,17 +9,12 @@ import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import java.util.List;
 
 public class DMIPortableBatteryService implements CommonDMIServiceInterface<DMIPortableBattery> {
-    @Override
-    public List<DMIPortableBattery> get() {
-        return new DMIPortableBatteryMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORTABLE_BATTERY.getValue()), 10)
-        );
-    }
 
     @Override
     public List<DMIPortableBattery> get(long timeout) {
         return new DMIPortableBatteryMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORTABLE_BATTERY.getValue()), timeout)
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORTABLE_BATTERY.getValue()), timeout),
+                DMIPortableBattery.class
         );
     }
 }

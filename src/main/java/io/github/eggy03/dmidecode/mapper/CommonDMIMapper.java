@@ -14,7 +14,6 @@ public interface CommonDMIMapper<S> {
 
     Gson GSON = new Gson();
 
-    public Class<S> getType();
 
     /* Example Schema
     # dmidecode 3.6
@@ -35,7 +34,7 @@ Processor Information
 		Multi-Core
 
      */
-    default Optional<S> mapToEntity(String rawDMIData) {
+    default Optional<S> mapToEntity(String rawDMIData, Class<S> mappableEntityClass) {
 
         Map<String, Object> keyValueMap = new LinkedHashMap<>();
 
@@ -82,7 +81,7 @@ Processor Information
 
         // convert the kv map to JSON and deserialize into an entity class
         JsonElement mapElement = GSON.toJsonTree(keyValueMap);
-        return Optional.ofNullable(GSON.fromJson(mapElement, getType()));
+        return Optional.ofNullable(GSON.fromJson(mapElement, mappableEntityClass));
     }
 
     /*
@@ -116,7 +115,7 @@ Cache Information
 	Associativity: 16-way Set-associative
 
      */
-    default List<S> mapToList(String rawDMIData) {
+    default List<S> mapToList(String rawDMIData, Class<S> mappableEntityClass) {
 
         List<S> entityList = new ArrayList<>();
 
@@ -169,7 +168,7 @@ Cache Information
             // convert each kv map into a JSON and then deserialize into an entity class
             if (!keyValueMap.isEmpty()) { // prevent empty entities from being serialized
                 JsonElement mapElement = GSON.toJsonTree(keyValueMap);
-                S entity = GSON.fromJson(mapElement, getType());
+                S entity = GSON.fromJson(mapElement, mappableEntityClass);
                 if (entity != null)
                     entityList.add(entity);
             }

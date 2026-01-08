@@ -4,7 +4,5 @@ import java.util.List;
 
 public interface CommonDMIServiceInterface<S> {
 
-    List<S> get();
-
     List<S> get(long timeout);
 }

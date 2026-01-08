@@ -13,17 +13,10 @@ public class DMISystemService implements OptionalCommonDMIServiceInterface<DMISy
 
     @Override
     @NotNull
-    public Optional<DMISystem> get() {
-        return new DMISystemMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), 10)
-        );
-    }
-
-    @Override
-    @NotNull
     public Optional<DMISystem> get(long timeout) {
         return new DMISystemMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), timeout)
+                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), timeout),
+                DMISystem.class
         );
     }
 }
