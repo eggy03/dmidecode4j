@@ -2,39 +2,86 @@ package io.github.eggy03.dmidecode.mapper;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * A common mapping interface for converting raw {@code dmidecode} output
+ * into strongly typed Java objects.
+ * <p>
+ * Provides default methods to parse structured DMI text data
+ * and map it into either:
+ * <ul>
+ *     <li>a single {@link Optional} entity</li>
+ *     <li>a {@link List} of entities when multiple DMI blocks are present</li>
+ * </ul>
+ * </p>
+ * <p>
+ * The mapping process works by:
+ * <ol>
+ *     <li>Parsing key–value pairs from the raw DMI text</li>
+ *     <li>Normalizing single-line and multi-line values</li>
+ *     <li>Converting the extracted data into JSON internally</li>
+ *     <li>Deserializing the JSON into the requested entity class using Gson</li>
+ * </ol>
+ * </p>
+ *
+ * @param <S> the entity type returned by the service implementation
+ * @since 0.1.0
+ * @author Sayan Bhattacharjee
+ */
 public interface CommonDMIMapper<S> {
 
     Gson GSON = new Gson();
 
-
-    /* Example Schema
-    # dmidecode 3.6
-Getting SMBIOS data from sysfs.
-SMBIOS 3.3.0 present.
-
-Handle 0x0011, DMI type 4, 48 bytes
-Processor Information
-	Socket Designation: FP6
-	Type: Central Processor
-	Family: Zen
-	Flags:
-		FPU (Floating-point unit on-chip)
-		VME (Virtual mode extension)
-	Version: AMD Ryzen 3 5300U with Radeon Graphics
-	Characteristics:
-		64-bit capable
-		Multi-Core
-
+    /**
+     * Maps raw {@code dmidecode} output into a single entity of type {@code <S>}.
+     * <p>
+     * If multiple DMI blocks are present in the input, the <strong>last parsed
+     * entity</strong> is returned.
+     * </p>
+     * <p>
+     * Multi-line values (for example, lists under keys like {@code Flags:}
+     * or {@code Characteristics:}) are automatically aggregated into lists.
+     * </p>
+     *
+     * <p><strong>Example schema:</strong></p>
+     * <pre>
+     * # dmidecode 3.6
+     * Getting SMBIOS data from sysfs.
+     * SMBIOS 3.3.0 present.
+     *
+     * Handle 0x0011, DMI type 4, 48 bytes
+     * Processor Information
+     *     Socket Designation: FP6
+     *     Type: Central Processor
+     *     Family: Zen
+     *     Flags:
+     *         FPU (Floating-point unit on-chip)
+     *         VME (Virtual mode extension)
+     *     Version: AMD Ryzen 3 5300U with Radeon Graphics
+     *     Characteristics:
+     *         64-bit capable
+     *         Multi-Core
+     * </pre>
+     * @param rawDMIData the raw {@code dmidecode} output
+     * @param mappableEntityClass the target entity class
+     * @return an {@link Optional} containing the mapped entity, or empty if
+     *         no mappable data is found
+     * @since 0.1.0
      */
-    default Optional<S> mapToEntity(String rawDMIData, Class<S> mappableEntityClass) {
+    default Optional<S> mapToEntity(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
+
+        if(rawDMIData==null)
+            return Optional.empty();
 
         Map<String, Object> keyValueMap = new LinkedHashMap<>();
 
@@ -84,38 +131,57 @@ Processor Information
         return Optional.ofNullable(GSON.fromJson(mapElement, mappableEntityClass));
     }
 
-    /*
-    Example Schema
-    # dmidecode 3.6
-Getting SMBIOS data from sysfs.
-SMBIOS 3.3.0 present.
-
-Handle 0x000E, DMI type 7, 27 bytes
-Cache Information
-	Socket Designation: L1 - Cache
-	Configuration: Enabled, Not Socketed, Level 1
-	Supported SRAM Types:
-		Pipeline Burst
-	Associativity: 8-way Set-associative
-
-Handle 0x000F, DMI type 7, 27 bytes
-Cache Information
-	Socket Designation: L2 - Cache
-	Configuration: Enabled, Not Socketed, Level 2
-	Supported SRAM Types:
-		Pipeline Burst
-	Associativity: 8-way Set-associative
-
-Handle 0x0010, DMI type 7, 27 bytes
-Cache Information
-	Socket Designation: L3 - Cache
-	Configuration: Enabled, Not Socketed, Level 3
-	Supported SRAM Types:
-		Pipeline Burst
-	Associativity: 16-way Set-associative
-
+    /**
+     * Maps raw {@code dmidecode} output into a list of entities of type {@code <S>}.
+     * <p>
+     * Each DMI block separated by a blank line is treated as an independent entity.
+     * Empty or non-mappable blocks are ignored.
+     * </p>
+     * <p>
+     * This method is useful for DMI structures that naturally occur multiple times,
+     * such as cache information, memory devices, or processor entries.
+     * </p>
+     *
+     * <p><strong>Example schema:</strong></p>
+     * <pre>
+     * # dmidecode 3.6
+     * Getting SMBIOS data from sysfs.
+     * SMBIOS 3.3.0 present.
+     *
+     * Handle 0x000E, DMI type 7, 27 bytes
+     * Cache Information
+     *     Socket Designation: L1 - Cache
+     *     Configuration: Enabled, Not Socketed, Level 1
+     *     Supported SRAM Types:
+     *         Pipeline Burst
+     *     Associativity: 8-way Set-associative
+     *
+     * Handle 0x000F, DMI type 7, 27 bytes
+     * Cache Information
+     *     Socket Designation: L2 - Cache
+     *     Configuration: Enabled, Not Socketed, Level 2
+     *     Supported SRAM Types:
+     *         Pipeline Burst
+     *     Associativity: 8-way Set-associative
+     *
+     * Handle 0x0010, DMI type 7, 27 bytes
+     * Cache Information
+     *     Socket Designation: L3 - Cache
+     *     Configuration: Enabled, Not Socketed, Level 3
+     *     Supported SRAM Types:
+     *         Pipeline Burst
+     *     Associativity: 16-way Set-associative
+     * </pre>
+     *
+     * @param rawDMIData the raw {@code dmidecode} output
+     * @param mappableEntityClass the target entity class
+     * @return a non-null list of mapped entities
+     * @since 0.1.0
      */
-    default List<S> mapToList(String rawDMIData, Class<S> mappableEntityClass) {
+    default List<S> mapToList(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
+
+        if(rawDMIData==null)
+            return Collections.emptyList();
 
         List<S> entityList = new ArrayList<>();
 
