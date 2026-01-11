@@ -1,3 +1,8 @@
+/*
+ * © 2026 The dmidecode4j contributors
+ * Licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
+ */
 package io.github.eggy03.dmidecode.entity.processor;
 
 import com.google.gson.GsonBuilder;
@@ -8,6 +13,34 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ * Immutable representation of processor cache information retrieved via DMI.
+ * <p>
+ * Fields correspond to properties reported by {@code dmidecode} for the Cache
+ * Information (Type 7) SMBIOS structure.
+ * </p>
+ * <p>
+ * Instances of this class are thread-safe.
+ * </p>
+ *
+ * <h2>Usage example</h2>
+ * <pre>{@code
+ * DMICache cache = DMICache.builder()
+ *     .socketDesignation("L3-Cache")
+ *     .location("Internal")
+ *     .installedSize("32 MB")
+ *     .associativity("16-way Set-Associative")
+ *     .build();
+ *
+ * // Create a modified copy
+ * DMICache updated = cache.toBuilder()
+ *     .installedSize("64 MB")
+ *     .build();
+ * }</pre>
+ *
+ * @since 0.1.0
+ * @author Sayan Bhattacharya
+ */
 @Value
 @Builder(toBuilder = true)
 public class DMICache {

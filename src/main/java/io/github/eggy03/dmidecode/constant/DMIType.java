@@ -1,8 +1,30 @@
+/*
+ * © 2026 The dmidecode4j contributors
+ * Licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
+ */
 package io.github.eggy03.dmidecode.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enumeration of DMI types as defined by the
+ * {@code dmidecode} specification.
+ * <p>
+ * Each enum constant represents a DMI type number that can be
+ * queried using the {@code dmidecode --type} command.
+ * </p>
+ *
+ * <h2>Usage example</h2>
+ * <pre>{@code
+ * // Build a dmidecode command for querying baseboard information
+ * String command = DMIType.getCommand(DMIType.BASEBOARD.getValue());
+ * }</pre>
+ *
+ * @since 0.1.0
+ * @author Sayan Bhattacharya
+ */
 @RequiredArgsConstructor
 @Getter
 public enum DMIType {

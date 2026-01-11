@@ -1,3 +1,8 @@
+/*
+ * © 2026 The dmidecode4j contributors
+ * Licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
+ */
 package io.github.eggy03.dmidecode.utility;
 
 import io.github.eggy03.dmidecode.exception.TerminalExecutionException;
@@ -14,10 +19,28 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.Duration;
 
+/**
+ * A utility class that provides a way to launch a terminal session
+ * <p>
+ * <b>Mostly for internal use </b>
+ * @author Sayan Bhattacharya
+ * @since 0.1.0
+ */
 @UtilityClass
 @Slf4j
 public class TerminalUtility {
 
+    /**
+     * Launches a standalone terminal session, executes the given command
+     * and returns the result
+     *
+     * @param command The command/script to be executed in the terminal
+     * @param timeoutSeconds Time in seconds after which the session will be force stopped
+     * @return The result of the command executed
+     * @throws TerminalExecutionException When the process is killed pre-maturely upon reaching the timeout
+     *                                   or when the command yields an error
+     * @throws IllegalArgumentException If the provided timeout is in the negative
+     */
     public static String executeCommand(@NotNull String command, long timeoutSeconds) {
 
         if(timeoutSeconds<0)
