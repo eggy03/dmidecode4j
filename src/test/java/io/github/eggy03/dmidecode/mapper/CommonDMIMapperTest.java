@@ -15,6 +15,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class CommonDMIMapperTest {
 
+    private static final String LS = System.lineSeparator();
+
     @Value
     @Builder(toBuilder = true)
     static class MockEntityClass {
@@ -48,57 +50,58 @@ class CommonDMIMapperTest {
 
     @BeforeAll
     static void setSingleEntityData() {
-        
-        singleEntityData.append("# dmidecode 3.6\n").
-                append("Getting SMBIOS data from sysfs.\n").
-                append("SMBIOS 3.3.0 present.\n\n").
 
-                append("Handle 0x0011, DMI type 4, 48 bytes\n").
-                append("Processor Information\n").
-                append("\tID: 1\n").
-                append("\tValue: ValueA\n").
-                append("\tValues:\n").
-                append("\t\tValue1\n").
-                append("\t\tValue2\n");
+        singleEntityData
+                .append("# dmidecode 3.6").append(LS)
+                .append("Getting SMBIOS data from sysfs.").append(LS)
+                .append("SMBIOS 3.3.0 present.").append(LS).append(LS)
+
+                .append("Handle 0x0011, DMI type 4, 48 bytes").append(LS)
+                .append("Processor Information").append(LS)
+                .append("\tID: 1").append(LS)
+                .append("\tValue: ValueA").append(LS)
+                .append("\tValues:").append(LS)
+                .append("\t\tValue1").append(LS)
+                .append("\t\tValue2").append(LS);
 
         singleEntityTestClass = MockEntityClass.builder()
                 .id(1L)
                 .value("ValueA")
                 .values(Arrays.asList("Value1", "Value2"))
                 .build();
-
-
     }
 
     @BeforeAll
     static void setEmptyData() {
-        emptyData.append("# dmidecode 3.6\n").
-                append("Getting SMBIOS data from sysfs.\n").
-                append("SMBIOS 3.3.0 present.\n\n");
+        emptyData
+                .append("# dmidecode 3.6").append(LS)
+                .append("Getting SMBIOS data from sysfs.").append(LS)
+                .append("SMBIOS 3.3.0 present.").append(LS).append(LS);
     }
 
     @BeforeAll
     static void setMultipleEntityData() {
 
-        multipleEntityData.append("# dmidecode 3.6\n").
-                append("Getting SMBIOS data from sysfs.\n").
-                append("SMBIOS 3.3.0 present.\n\n").
+        multipleEntityData
+                .append("# dmidecode 3.6").append(LS)
+                .append("Getting SMBIOS data from sysfs.").append(LS)
+                .append("SMBIOS 3.3.0 present.").append(LS).append(LS)
 
-                append("Handle 0x0011, DMI type 4, 48 bytes\n").
-                append("Processor Information\n").
-                append("\tID: 1\n").
-                append("\tValue: ValueA\n").
-                append("\tValues:\n").
-                append("\t\tValue1\n").
-                append("\t\tValue2\n\n").
+                .append("Handle 0x0011, DMI type 4, 48 bytes").append(LS)
+                .append("Processor Information").append(LS)
+                .append("\tID: 1").append(LS)
+                .append("\tValue: ValueA").append(LS)
+                .append("\tValues:").append(LS)
+                .append("\t\tValue1").append(LS)
+                .append("\t\tValue2").append(LS).append(LS)
 
-                append("Handle 0x0011, DMI type 4, 48 bytes\n").
-                append("Processor Information\n").
-                append("\tID: 2\n").
-                append("\tValue: ValueB\n").
-                append("\tValues:\n").
-                append("\t\tValue3\n").
-                append("\t\tValue4\n\n");
+                .append("Handle 0x0011, DMI type 4, 48 bytes").append(LS)
+                .append("Processor Information").append(LS)
+                .append("\tID: 2").append(LS)
+                .append("\tValue: ValueB").append(LS)
+                .append("\tValues:").append(LS)
+                .append("\t\tValue3").append(LS)
+                .append("\t\tValue4").append(LS).append(LS);
 
         multipleEntityClassOne = MockEntityClass.builder()
                 .id(1L)
@@ -111,8 +114,6 @@ class CommonDMIMapperTest {
                 .value("ValueB")
                 .values(Arrays.asList("Value3", "Value4"))
                 .build();
-
-
     }
 
     @Test
@@ -137,7 +138,7 @@ class CommonDMIMapperTest {
 
     @Test
     void test_mapToEntity_keyWithNoValue() {
-        String data = "ID: 1\n" + "Value:\n" + "Values: ";
+        String data = "ID: 1" + LS + "Value:" + LS + "Values: ";
         Optional<MockEntityClass> result = mapper.mapToEntity(data, MockEntityClass.class);
 
         assertThat(result.isPresent());

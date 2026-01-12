@@ -2,6 +2,8 @@ package io.github.eggy03.dmidecode.utility;
 
 import io.github.eggy03.dmidecode.exception.TerminalExecutionException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,11 +12,7 @@ import java.util.Objects;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * WARNING:
- * This test requires a Linux system with /bin/sh available.
- * It spawns real shell processes.
- */
+@EnabledOnOs(OS.LINUX)
 class TerminalUtilityTest {
 
     private static final long TIMEOUT = 15L;
