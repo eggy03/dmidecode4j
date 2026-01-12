@@ -38,7 +38,7 @@ public class TerminalUtility {
      * @param timeoutSeconds Time in seconds after which the session will be force stopped
      * @return The result of the command executed
      * @throws TerminalExecutionException When the process is killed pre-maturely upon reaching the timeout
-     *                                   or when the command yields an error
+     *                                   or when the command yields an error, or when the terminal cannot be accessed.
      * @throws IllegalArgumentException If the provided timeout is in the negative
      */
     public static String executeCommand(@NotNull String command, long timeoutSeconds) {
