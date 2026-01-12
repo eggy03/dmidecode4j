@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  * See the LICENSE file in the project root for more information.
  */
-package io.github.eggy03.dmidecode.entity.physicalmemory;
+package io.github.eggy03.dmidecode.entity.memory;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;

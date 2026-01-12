@@ -22,14 +22,14 @@ import java.util.List;
  *
  * <h2>Usage examples</h2>
  * <pre>{@code
- * DMIPortConnectionInformationService service = new DMIPortConnectionInformationService();
+ * DMIPortConnectorInformationService service = new DMIPortConnectorInformationService();
  * List<DMIPortConnectorInformation> ports = service.get(10);
  * }</pre>
  *
  * @since 0.1.0
  * @author Sayan Bhattacharya
  */
-public class DMIPortConnectionInformationService implements CommonDMIServiceInterface<DMIPortConnectorInformation> {
+public class DMIPortConnectorInformationService implements CommonDMIServiceInterface<DMIPortConnectorInformation> {
 
     /**
      * Retrieves port connector entries present in the system

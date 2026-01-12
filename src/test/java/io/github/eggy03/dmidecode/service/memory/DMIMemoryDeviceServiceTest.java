@@ -1,6 +1,6 @@
-package io.github.eggy03.dmidecode.service.physicalmemory;
+package io.github.eggy03.dmidecode.service.memory;
 
-import io.github.eggy03.dmidecode.entity.physicalmemory.DMIMemoryDevice;
+import io.github.eggy03.dmidecode.entity.memory.DMIMemoryDevice;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

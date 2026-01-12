@@ -3,10 +3,10 @@
  * Licensed under the MIT License.
  * See the LICENSE file in the project root for more information.
  */
-package io.github.eggy03.dmidecode.service.physicalmemory;
+package io.github.eggy03.dmidecode.service.memory;
 
 import io.github.eggy03.dmidecode.constant.DMIType;
-import io.github.eggy03.dmidecode.entity.physicalmemory.DMIMemoryDevice;
+import io.github.eggy03.dmidecode.entity.memory.DMIMemoryDevice;
 import io.github.eggy03.dmidecode.mapper.physicalmemory.DMIMemoryDeviceMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
