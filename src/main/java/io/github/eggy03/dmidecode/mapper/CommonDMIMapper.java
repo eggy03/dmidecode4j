@@ -24,20 +24,21 @@ import java.util.Optional;
  * <p>
  * Provides default methods to parse structured DMI text data
  * and map it into either:
+ * </p>
  * <ul>
  *     <li>a single {@link Optional} entity</li>
  *     <li>a {@link List} of entities when multiple DMI blocks are present</li>
  * </ul>
- * </p>
+ *
  * <p>
  * The mapping process works by:
+ * </p>
  * <ol>
  *     <li>Parsing key–value pairs from the raw DMI text</li>
  *     <li>Normalizing single-line and multi-line values</li>
  *     <li>Converting the extracted data into JSON internally</li>
  *     <li>Deserializing the JSON into the requested entity class using Gson</li>
  * </ol>
- * </p>
  *
  * @param <S> the entity type returned by the service implementation
  * @since 0.1.0
