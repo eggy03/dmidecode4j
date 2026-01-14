@@ -8,11 +8,11 @@ package io.github.eggy03.dmidecode.service.processor;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.processor.DMIProcessor;
 import io.github.eggy03.dmidecode.mapper.processor.DMIProcessorMapper;
-import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
+import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Service class for fetching processor information from the system.
@@ -30,7 +30,7 @@ import java.util.Optional;
  * @since 0.1.0
  * @author Sayan Bhattacharya
  */
-public class DMIProcessorService implements OptionalCommonDMIServiceInterface<DMIProcessor> {
+public class DMIProcessorService implements CommonDMIServiceInterface<DMIProcessor> {
 
     /**
      * Retrieves processor information present in the system
@@ -41,16 +41,15 @@ public class DMIProcessorService implements OptionalCommonDMIServiceInterface<DM
      *
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
-     * @return an {@link Optional} containing {@link DMIProcessor} information
-     *         if present, or {@link Optional#empty()} if no processor entry
-     *         is detected
+     * @return a list containing {@link DMIProcessor} entries
+     *         if present, or an empty list if no processor entries are detected
      *
      * @since 0.1.0
      */
     @Override
     @NotNull
-    public Optional<DMIProcessor> get(long timeout) {
-        return new DMIProcessorMapper().mapToEntity(
+    public List<DMIProcessor> get(long timeout) {
+        return new DMIProcessorMapper().mapToList(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), timeout),
                 DMIProcessor.class
         );

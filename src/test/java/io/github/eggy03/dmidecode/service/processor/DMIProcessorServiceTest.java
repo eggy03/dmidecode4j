@@ -118,7 +118,7 @@ class DMIProcessorServiceTest {
                     .when(() -> TerminalUtility.executeCommand(anyString(), anyLong()))
                     .thenReturn("invalid output");
 
-            assertThat(service.get(15)).contains(DMIProcessor.builder().build());
+            assertThat(service.get(15)).isEmpty();
         }
     }
 }
