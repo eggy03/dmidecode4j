@@ -55,33 +55,3 @@ public class ProcessorExample {
 ```
 # License
 This project is licensed under the [MIT License](/LICENSE).
-
-# FAQ
-1) How can I contribute to this project ?
-   
-   A: You cannot :(
-
----   
-
-2) Why can I not contribute to this project ?
-   
-   A: Skill issue....
-   Not *yours* but mine. I haven't set up any docs, examples or contribution guidelines yet (✿◠‿◠)
-
----
-
-3) When can I start contributing to this horrible codebase then ?
-
-   A: hahaaaaaaaaaaaa.....uhhh.....perhaps when i set everything up ٩(^‿^)۶
-
----
-
-4) Can I criticize you for your bad code ?
-
-   A: No :( I'm sensitive
-
----
-
-5) Does this library even do its job ?
-
-   A: Loook..all u need to know that I said it works. U can trust me ¯\(°_o)/¯
