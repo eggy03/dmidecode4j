@@ -41,7 +41,7 @@ class DMIChassisServiceTest {
                 "\tSKU Number: SKU-001"
         );
 
-        mockDMIClass = DMIChassis.builder()
+        mockDMIClass = new DMIChassis.Builder()
                 .manufacturer("Dell Inc.")
                 .type("Desktop")
                 .lock("Not Present")
@@ -82,7 +82,7 @@ class DMIChassisServiceTest {
                     .when(() -> TerminalUtility.executeCommand(anyString(), anyLong()))
                     .thenReturn("invalid output");
 
-            assertThat(service.get(15)).contains(DMIChassis.builder().build());
+            assertThat(service.get(15)).contains(new DMIChassis.Builder().build());
         }
     }
 }

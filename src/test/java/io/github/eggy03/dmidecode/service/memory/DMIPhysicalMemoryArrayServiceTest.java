@@ -32,7 +32,7 @@ class DMIPhysicalMemoryArrayServiceTest {
                 "\tNumber Of Devices: 4"
         );
 
-        mockDMIClass = DMIPhysicalMemoryArray.builder()
+        mockDMIClass = new DMIPhysicalMemoryArray.Builder()
                 .location("System Board Or Motherboard")
                 .use("System Memory")
                 .errorCorrectionType("Multi-bit ECC")
@@ -65,7 +65,7 @@ class DMIPhysicalMemoryArrayServiceTest {
                     .thenReturn("invalid output");
 
             assertThat(service.get(15))
-                    .contains(DMIPhysicalMemoryArray.builder().build());
+                    .contains(new DMIPhysicalMemoryArray.Builder().build());
         }
     }
 }

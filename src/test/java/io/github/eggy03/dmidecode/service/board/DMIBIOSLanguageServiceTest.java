@@ -33,7 +33,7 @@ class DMIBIOSLanguageServiceTest {
                 "\tCurrently Installed Language: en|US"
         );
 
-        mockDMIClass = DMIBIOSLanguage.builder()
+        mockDMIClass = new DMIBIOSLanguage.Builder()
                 .installableLanguages(Arrays.asList(
                         "en|US",
                         "fr|FR",
@@ -65,7 +65,7 @@ class DMIBIOSLanguageServiceTest {
                     .when(() -> TerminalUtility.executeCommand(anyString(), anyLong()))
                     .thenReturn("invalid output");
 
-            assertThat(service.get(15)).contains(DMIBIOSLanguage.builder().build());
+            assertThat(service.get(15)).contains(new DMIBIOSLanguage.Builder().build());
         }
     }
 }

@@ -47,7 +47,7 @@ class DMIMemoryDeviceServiceTest {
                 "\tConfigured Voltage: 1.2 V"
         );
 
-        mockDMIClass = DMIMemoryDevice.builder()
+        mockDMIClass = new DMIMemoryDevice.Builder()
                 .arrayHandle("0x002C")
                 .errorInformationHandle("0x002D")
                 .totalWidth("64 bits")

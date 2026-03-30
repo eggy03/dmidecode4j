@@ -37,7 +37,7 @@ class DMISystemSlotsServiceTest {
                 "\tBus Address: 0000:01:00.0"
         );
 
-        mockDMIClass = DMISystemSlots.builder()
+        mockDMIClass = new DMISystemSlots.Builder()
                 .designation("PCIEX16")
                 .type("PCI Express")
                 .currentUsage("In Use")

@@ -34,7 +34,7 @@ class DMISystemServiceTest {
                 "\tFamily: ThinkPad"
         );
 
-        mockDMIClass = DMISystem.builder()
+        mockDMIClass = new DMISystem.Builder()
                 .manufacturer("LENOVO")
                 .productName("ThinkPad T14 Gen 3")
                 .version("ThinkPad T14 Gen 3")
@@ -68,7 +68,7 @@ class DMISystemServiceTest {
                     .when(() -> TerminalUtility.executeCommand(anyString(), anyLong()))
                     .thenReturn("invalid output");
 
-            assertThat(service.get(15)).contains(DMISystem.builder().build());
+            assertThat(service.get(15)).contains(new DMISystem.Builder().build());
         }
     }
 }

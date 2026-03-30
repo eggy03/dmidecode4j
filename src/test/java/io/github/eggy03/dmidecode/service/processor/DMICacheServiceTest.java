@@ -42,7 +42,7 @@ class DMICacheServiceTest {
                 "\tAssociativity: 16-way Set-Associative"
         );
 
-        mockDMIClass = DMICache.builder()
+        mockDMIClass = new DMICache.Builder()
                 .socketDesignation("L3-Cache")
                 .configuration("Enabled, Not Socketed, Level 3")
                 .operationalMode("Write Back")
