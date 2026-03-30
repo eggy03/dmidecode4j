@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,7 +85,7 @@ public interface CommonDMIMapper<S> {
      *         no mappable data is found
      * @since 0.1.0
      */
-    default Optional<S> mapToEntity(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
+    default @NotNull Optional<S> mapToEntity(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
 
         if(rawDMIData==null)
             return Optional.empty();
@@ -184,7 +185,7 @@ public interface CommonDMIMapper<S> {
      * @return a non-null list of mapped entities
      * @since 0.1.0
      */
-    default List<S> mapToList(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
+    default @NotNull @Unmodifiable List<S> mapToList(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
 
         if(rawDMIData==null)
             return Collections.emptyList();
@@ -250,6 +251,6 @@ public interface CommonDMIMapper<S> {
             key.setLength(0);
             value = null;
         }
-        return entityList;
+        return entityList.isEmpty() ? Collections.emptyList() : Collections.unmodifiableList(new ArrayList<>(entityList));
     }
 }
