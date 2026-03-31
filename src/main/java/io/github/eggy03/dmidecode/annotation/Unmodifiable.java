@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * @since 0.2.0
  */
 @Target({ElementType.TYPE_USE})
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Unmodifiable {
 }
