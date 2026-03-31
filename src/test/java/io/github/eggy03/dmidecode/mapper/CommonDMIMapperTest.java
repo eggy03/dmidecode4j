@@ -1,14 +1,13 @@
 package io.github.eggy03.dmidecode.mapper;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
-import lombok.Value;
-import org.jetbrains.annotations.Nullable;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -17,21 +16,51 @@ class CommonDMIMapperTest {
 
     private static final String LS = System.lineSeparator();
 
-    @Value
-    @Builder(toBuilder = true)
     static class MockEntityClass {
 
         @Nullable
-        @SerializedName("ID")
+        @JsonProperty("ID")
         Long id;
 
         @Nullable
-        @SerializedName("Value")
+        @JsonProperty("Value")
         String value;
 
         @Nullable
-        @SerializedName("Values")
-        List<String> values;
+        @JsonProperty("Values")
+        List<@Nullable String> values;
+
+        public MockEntityClass() {
+            this.id=null;
+            this.value=null;
+            this.values=null;
+        }
+
+        public MockEntityClass(@Nullable Long id, @Nullable String value, @Nullable List<@Nullable String> values) {
+            this.id=id;
+            this.value=value;
+            this.values=values;
+        }
+
+        @Override
+        public String toString() {
+            return "{\n\t" + this.id + ",\n\t" + this.value + ",\n\t" + this.values + "\n}";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof MockEntityClass)) return false;
+            MockEntityClass that = (MockEntityClass) o;
+            return Objects.equals(id, that.id) &&
+                    Objects.equals(value, that.value) &&
+                    Objects.equals(values, that.values);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, value, values);
+        }
 
     }
 
@@ -64,11 +93,7 @@ class CommonDMIMapperTest {
                 .append("\t\tValue1").append(LS)
                 .append("\t\tValue2").append(LS);
 
-        singleEntityTestClass = MockEntityClass.builder()
-                .id(1L)
-                .value("ValueA")
-                .values(Arrays.asList("Value1", "Value2"))
-                .build();
+        singleEntityTestClass = new MockEntityClass(1L, "ValueA", Arrays.asList("Value1", "Value2"));
     }
 
     @BeforeAll
@@ -103,17 +128,9 @@ class CommonDMIMapperTest {
                 .append("\t\tValue3").append(LS)
                 .append("\t\tValue4").append(LS).append(LS);
 
-        multipleEntityClassOne = MockEntityClass.builder()
-                .id(1L)
-                .value("ValueA")
-                .values(Arrays.asList("Value1", "Value2"))
-                .build();
+        multipleEntityClassOne = new MockEntityClass(1L, "ValueA", Arrays.asList("Value1", "Value2"));
 
-        multipleEntityClassTwo = MockEntityClass.builder()
-                .id(2L)
-                .value("ValueB")
-                .values(Arrays.asList("Value3", "Value4"))
-                .build();
+        multipleEntityClassTwo = new MockEntityClass(2L, "ValueB", Arrays.asList("Value3", "Value4"));
     }
 
     @Test
@@ -141,15 +158,15 @@ class CommonDMIMapperTest {
         String data = "ID: 1" + LS + "Value:" + LS + "Values: ";
         Optional<MockEntityClass> result = mapper.mapToEntity(data, MockEntityClass.class);
 
-        assertThat(result.isPresent());
-        assertThat(result).contains(MockEntityClass.builder().id(1L).build());
+        assertThat(result).isPresent();
+        assertThat(result).contains(new MockEntityClass(1L, null, null));
     }
 
     @Test
     void test_mapToEntity_empty_success() {
         Optional<MockEntityClass> testClass = mapper.mapToEntity(emptyData.toString(), MockEntityClass.class);
         assertThat(testClass).isPresent();
-        assertThat(testClass).contains(MockEntityClass.builder().build()); // empty entity class with null values
+        assertThat(testClass).contains(new MockEntityClass()); // empty entity class with null values
     }
 
 

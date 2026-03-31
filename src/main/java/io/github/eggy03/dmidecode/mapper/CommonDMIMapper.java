@@ -5,11 +5,10 @@
  */
 package io.github.eggy03.dmidecode.mapper;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +37,7 @@ import java.util.Optional;
  *     <li>Parsing key–value pairs from the raw DMI text</li>
  *     <li>Normalizing single-line and multi-line values</li>
  *     <li>Converting the extracted data into JSON internally</li>
- *     <li>Deserializing the JSON into the requested entity class using Gson</li>
+ *     <li>Deserializing the JSON into the requested entity class using Jackson</li>
  * </ol>
  *
  * @param <S> the entity type returned by the service implementation
@@ -46,7 +45,7 @@ import java.util.Optional;
  */
 public interface CommonDMIMapper<S> {
 
-    Gson GSON = new Gson();
+    ObjectMapper jacksonMapper = new ObjectMapper();
 
     /**
      * Maps raw {@code dmidecode} output into a single entity of type {@code <S>}.
@@ -91,50 +90,46 @@ public interface CommonDMIMapper<S> {
 
         Map<String, Object> keyValueMap = new LinkedHashMap<>();
 
-        StringBuilder key = new StringBuilder();
-        // for single-line values
-        Object value = null;
-        // for multi-line values
-        List<Object> values = new ArrayList<>();
+        String key = null;
+        String singleLineValue = null; // for single-line values
+        List<String> multiLineValues = new ArrayList<>(); // for multi-line values
 
         // split each line in the active block separated by a newline [each string will be a single line "key:single-line-value" or a multi line "key:multi-line-value"
         for (String currentLine : rawDMIData.split(System.lineSeparator())) {
 
             if (currentLine.contains(":")) {
                 // store the previous key and value if present, indicated by a key of length greater than 0
-                if (key.length() > 0) {
+                if (key!=null && !key.isEmpty()) {
                     // if the value has multi lines, insert them or else insert the single line value
-                    keyValueMap.put(key.toString(), !values.isEmpty() ? new ArrayList<>(values) : value);
+                    keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
                 }
                 // Reset state so we can start processing this new "key: value" line
-                key.setLength(0);
-                value = null;
-                values.clear(); // keeping this outside the key length check helps clear out any accumulated DMI headers so that they don't get added in the values. The reason is that these values have no keys, so key length is always 0
+                singleLineValue = null;
+                multiLineValues.clear(); // keeping this outside the key length check helps clear out any accumulated DMI headers so that they don't get added in the values. The reason is that these values have no keys, so key length is always 0
 
                 // Split "Key: Value" into LHS and RHS
                 String[] parts = currentLine.split(":", 2);
-                key.append(parts[0].trim());
+                key = parts[0].trim();
                 if (!parts[1].trim().isEmpty()) // skip values that are empty near the immediate key, especially in cases where values are multi-lines; for them each value starts in a new line after the key (e.g. "Supported SRAM Types:" before the indented list)
-                    value = parts[1].trim();
+                    singleLineValue = parts[1].trim();
             } else {// if the value spans across multiple lines, convert the value to an arraylist
 
                 // If we previously captured a single value (for this key),
                 // move it into a list so that subsequent values append cleanly.
-                if (value != null) { // add the last singular value to the value list. this value is usually the first value in the array of values
-                    values.add(value);
-                    value = null; // set the value to null the single value does not get repeated during appending the subsequent values
+                if (singleLineValue != null) { // add the last singular value to the value list. this value is usually the first value in the array of values
+                    multiLineValues.add(singleLineValue);
+                    singleLineValue = null; // set the value to null the single value does not get repeated during appending the subsequent values
                 }
-                values.add(currentLine.trim()); // Add the current list item
+                multiLineValues.add(currentLine.trim()); // Add the current list item
             }
         }
         // Store the last key/value pair
-        if (key.length() > 0) {
-            keyValueMap.put(key.toString(), !values.isEmpty() ? new ArrayList<>(values) : value);
+        if (key!=null && !key.isEmpty()) {
+            keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
         }
 
         // convert the kv map to JSON and deserialize into an entity class
-        JsonElement mapElement = GSON.toJsonTree(keyValueMap);
-        return Optional.ofNullable(GSON.fromJson(mapElement, mappableEntityClass));
+        return Optional.ofNullable(jacksonMapper.convertValue(keyValueMap, mappableEntityClass));
     }
 
     /**
@@ -193,11 +188,9 @@ public interface CommonDMIMapper<S> {
 
         Map<String, Object> keyValueMap = new HashMap<>();
 
-        StringBuilder key = new StringBuilder();
-        // for single-line values
-        Object value = null;
-        // for multi-line values
-        List<Object> values = new ArrayList<>();
+        String key = null;
+        String singleLineValue = null; // for single-line values
+        List<String> multiLineValues = new ArrayList<>(); // for multi-line values
 
         // each DMI block is separated by a double new line
         for (String currentDMIObject : rawDMIData.split(System.lineSeparator() + System.lineSeparator())) {
@@ -207,48 +200,46 @@ public interface CommonDMIMapper<S> {
 
                 if (currentLine.contains(":")) {
                     // store the previous key and value if present, indicated by a key of length greater than 0
-                    if (key.length() > 0) {
+                    if (key!=null && !key.isEmpty()) {
                         // if the value has multi lines, insert them or else insert the single line value
-                        keyValueMap.put(key.toString(), !values.isEmpty() ? new ArrayList<>(values) : value);
+                        keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
                     }
                     // Reset state so we can start processing this new "key: value" line
-                    key.setLength(0);
-                    value = null;
-                    values.clear(); // keeping this outside the key length check helps clear out any accumulated DMI headers so that they don't get added in the values. The reason is that these values have no keys, so key length is always 0
+                    singleLineValue = null;
+                    multiLineValues.clear(); // keeping this outside the key length check helps clear out any accumulated DMI headers so that they don't get added in the values. The reason is that these values have no keys, so key length is always 0
 
                     // Split "Key: Value" into LHS and RHS
                     String[] parts = currentLine.split(":", 2);
-                    key.append(parts[0].trim());
+                    key = parts[0].trim();
                     if (!parts[1].trim().isEmpty()) // skip values that are empty near the immediate key, especially in cases where values are multilines; for them each value starts in a new line after the key (e.g. "Supported SRAM Types:" before the indented list)
-                        value = parts[1].trim();
+                        singleLineValue = parts[1].trim();
                 } else {// if the value spans across multiple lines, convert the value to an arraylist
 
                     // If we previously captured a single value (for this key),
                     // move it into a list so that subsequent values append cleanly.
-                    if (value != null) {
-                        values.add(value);
-                        value = null; // set the value to null the single value does not get repeated during appending the subsequent values
+                    if (singleLineValue != null) {
+                        multiLineValues.add(singleLineValue);
+                        singleLineValue = null; // set the value to null the single value does not get repeated during appending the subsequent values
                     }
-                    values.add(currentLine.trim()); // Add the current list item
+                    multiLineValues.add(currentLine.trim()); // Add the current list item
                 }
             }
             // Store the last key/value pair in this DMI block
-            if (key.length() > 0) {
-                keyValueMap.put(key.toString(), !values.isEmpty() ? new ArrayList<>(values) : value);
+            if (key!=null && !key.isEmpty()) {
+                keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
             }
 
             // convert each kv map into a JSON and then deserialize into an entity class
             if (!keyValueMap.isEmpty()) { // prevent empty entities from being serialized
-                JsonElement mapElement = GSON.toJsonTree(keyValueMap);
-                S entity = GSON.fromJson(mapElement, mappableEntityClass);
+                S entity = jacksonMapper.convertValue(keyValueMap, mappableEntityClass);
                 if (entity != null)
                     entityList.add(entity);
             }
 
             // reset the kv map, key and value to get ready for the next DMIObject
             keyValueMap.clear();
-            key.setLength(0);
-            value = null;
+            key = null;
+            singleLineValue = null;
         }
         return entityList.isEmpty() ? Collections.emptyList() : Collections.unmodifiableList(new ArrayList<>(entityList));
     }
