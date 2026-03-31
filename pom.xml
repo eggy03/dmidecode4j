@@ -21,7 +21,7 @@
 
         <project.developer.id>Egg-03</project.developer.id>
         <project.developer.name>Sayan Bhattacharjee</project.developer.name>
-        <project.developer.email>egg03@duck.com</project.developer.email>
+        <project.developer.email>eggzerothree@proton.me</project.developer.email>
 
         <project.scm.url>https://github.com/eggy03/dmidecode4j.git</project.scm.url>
         <project.scm.dev>scm:git:ssh://git@github.com:eggy03/dmidecode4j.git</project.scm.dev>
