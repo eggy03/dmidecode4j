@@ -50,7 +50,7 @@ public class DMIPortConnectorInformationService implements CommonDMIServiceInter
     @Override
     public @Unmodifiable @NonNull List<DMIPortConnectorInformation> get(long timeout) {
         return new DMIPortConnectionInformationMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PORT_CONNECTOR), timeout),
                 DMIPortConnectorInformation.class
         );
     }

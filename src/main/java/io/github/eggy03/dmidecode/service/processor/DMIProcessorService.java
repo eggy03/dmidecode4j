@@ -49,7 +49,7 @@ public class DMIProcessorService implements CommonDMIServiceInterface<DMIProcess
     @Override
     public @Unmodifiable @NonNull List<DMIProcessor> get(long timeout) {
         return new DMIProcessorMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PROCESSOR), timeout),
                 DMIProcessor.class
         );
     }

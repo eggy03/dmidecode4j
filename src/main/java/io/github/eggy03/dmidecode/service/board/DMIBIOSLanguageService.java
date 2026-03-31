@@ -48,7 +48,7 @@ public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface
     @Override
     public @NonNull Optional<DMIBIOSLanguage> get(long timeout) {
         return new DMIBIOSLanguageMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS_LANGUAGE.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.BIOS_LANGUAGE), timeout),
                 DMIBIOSLanguage.class
         );
     }

@@ -50,7 +50,7 @@ public class DMIPortableBatteryService implements CommonDMIServiceInterface<DMIP
     @Override
     public @Unmodifiable @NonNull List<DMIPortableBattery> get(long timeout) {
         return new DMIPortableBatteryMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORTABLE_BATTERY.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PORTABLE_BATTERY), timeout),
                 DMIPortableBattery.class
         );
     }

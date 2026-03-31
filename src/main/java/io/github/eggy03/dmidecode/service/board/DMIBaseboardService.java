@@ -49,7 +49,7 @@ public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DM
     @Override
     public @NonNull Optional<DMIBaseboard> get(long timeout) {
         return new DMIBaseboardMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.BASEBOARD), timeout),
                 DMIBaseboard.class
         );
     }

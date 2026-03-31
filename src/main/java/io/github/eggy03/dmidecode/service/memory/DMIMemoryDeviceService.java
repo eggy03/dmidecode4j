@@ -50,7 +50,7 @@ public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemo
     @Override
     public @Unmodifiable @NonNull List<DMIMemoryDevice> get(long timeout) {
         return new DMIMemoryDeviceMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.MEMORY_DEVICE), timeout),
                 DMIMemoryDevice.class
         );
     }

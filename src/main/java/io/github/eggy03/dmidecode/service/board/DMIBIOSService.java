@@ -49,7 +49,7 @@ public class DMIBIOSService implements CommonDMIServiceInterface<DMIBIOS> {
     @Override
     public @NonNull @Unmodifiable List<DMIBIOS> get(long timeout) {
         return new DMIBIOSMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.BIOS), timeout),
                 DMIBIOS.class
         );
     }

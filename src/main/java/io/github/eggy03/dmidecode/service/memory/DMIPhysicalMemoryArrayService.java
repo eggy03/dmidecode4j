@@ -49,7 +49,7 @@ public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceIn
     @Override
     public @NonNull Optional<DMIPhysicalMemoryArray> get(long timeout) {
         return new DMIPhysicalMemoryArrayMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PHYSICAL_MEMORY_ARRAY.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PHYSICAL_MEMORY_ARRAY), timeout),
                 DMIPhysicalMemoryArray.class
         );
     }

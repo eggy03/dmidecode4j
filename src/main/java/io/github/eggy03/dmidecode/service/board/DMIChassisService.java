@@ -48,7 +48,7 @@ public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIC
     @Override
     public @NonNull Optional<DMIChassis> get(long timeout) {
         return new DMIChassisMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CHASSIS.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.CHASSIS), timeout),
                 DMIChassis.class
         );
     }

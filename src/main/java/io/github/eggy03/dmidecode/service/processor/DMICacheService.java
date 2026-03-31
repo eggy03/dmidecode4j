@@ -50,7 +50,7 @@ public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
     @Override
     public @Unmodifiable @NonNull List<DMICache> get(long timeout) {
         return new DMICacheMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.CACHE), timeout),
                 DMICache.class
         );
     }

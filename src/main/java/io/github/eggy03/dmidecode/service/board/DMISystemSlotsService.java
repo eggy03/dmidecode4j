@@ -50,7 +50,7 @@ public class DMISystemSlotsService implements CommonDMIServiceInterface<DMISyste
     @Override
     public @Unmodifiable @NonNull List<DMISystemSlots> get(long timeout) {
         return new DMISystemSlotsMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM_SLOTS.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.SYSTEM_SLOTS), timeout),
                 DMISystemSlots.class
         );
     }

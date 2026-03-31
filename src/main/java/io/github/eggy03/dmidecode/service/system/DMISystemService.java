@@ -50,7 +50,7 @@ public class DMISystemService implements OptionalCommonDMIServiceInterface<DMISy
     @Override
     public @Unmodifiable @NonNull Optional<DMISystem> get(long timeout) {
         return new DMISystemMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.SYSTEM), timeout),
                 DMISystem.class
         );
     }
