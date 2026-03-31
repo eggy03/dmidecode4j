@@ -19,7 +19,6 @@ import java.util.List;
  * @param <S> the entity type returned by the service implementation
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  * @see OptionalCommonDMIServiceInterface
  */
 public interface CommonDMIServiceInterface<S> {

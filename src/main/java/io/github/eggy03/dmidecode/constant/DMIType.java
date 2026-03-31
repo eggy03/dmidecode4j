@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 @RequiredArgsConstructor
 @Getter

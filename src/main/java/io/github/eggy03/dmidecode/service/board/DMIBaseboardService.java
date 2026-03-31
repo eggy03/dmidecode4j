@@ -29,7 +29,6 @@ import java.util.Optional;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DMIBaseboard> {
 

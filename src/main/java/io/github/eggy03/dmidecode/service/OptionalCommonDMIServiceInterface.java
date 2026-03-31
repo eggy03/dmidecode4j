@@ -19,7 +19,6 @@ import java.util.Optional;
  * @param <S> the entity type returned by the service implementation
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  * @see CommonDMIServiceInterface
  */
 public interface OptionalCommonDMIServiceInterface<S> {

@@ -10,7 +10,6 @@ import lombok.experimental.StandardException;
 /**
  * Thrown when the terminal fails to execute a command or a script
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 @StandardException
 public class TerminalExecutionException extends RuntimeException {

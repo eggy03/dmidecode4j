@@ -13,7 +13,6 @@ import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
  * and maps raw {@code dmidecode} output to objects or lists of {@link DMIPortableBattery}.
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIPortableBatteryMapper implements CommonDMIMapper<DMIPortableBattery> {
 }
