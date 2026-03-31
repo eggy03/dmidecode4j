@@ -7,9 +7,9 @@ package io.github.eggy03.dmidecode.mapper;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.Unmodifiable;
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,7 +85,7 @@ public interface CommonDMIMapper<S> {
      *         no mappable data is found
      * @since 0.1.0
      */
-    default @NotNull Optional<S> mapToEntity(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
+    default @NonNull Optional<S> mapToEntity(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 
         if(rawDMIData==null)
             return Optional.empty();
@@ -185,7 +185,7 @@ public interface CommonDMIMapper<S> {
      * @return a non-null list of mapped entities
      * @since 0.1.0
      */
-    default @NotNull @Unmodifiable List<S> mapToList(@Nullable String rawDMIData, @NotNull Class<S> mappableEntityClass) {
+    default @NonNull @Unmodifiable List<S> mapToList(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 
         if(rawDMIData==null)
             return Collections.emptyList();

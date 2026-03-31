@@ -5,12 +5,13 @@
  */
 package io.github.eggy03.dmidecode.service.processor;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.processor.DMICache;
 import io.github.eggy03.dmidecode.mapper.processor.DMICacheMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -48,8 +49,7 @@ public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public List<DMICache> get(long timeout) {
+    public @Unmodifiable @NonNull List<DMICache> get(long timeout) {
         return new DMICacheMapper().mapToList(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), timeout),
                 DMICache.class

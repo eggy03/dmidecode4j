@@ -5,12 +5,13 @@
  */
 package io.github.eggy03.dmidecode.service.processor;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.processor.DMIProcessor;
 import io.github.eggy03.dmidecode.mapper.processor.DMIProcessorMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -47,8 +48,7 @@ public class DMIProcessorService implements CommonDMIServiceInterface<DMIProcess
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public List<DMIProcessor> get(long timeout) {
+    public @Unmodifiable @NonNull List<DMIProcessor> get(long timeout) {
         return new DMIProcessorMapper().mapToList(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PROCESSOR.getValue()), timeout),
                 DMIProcessor.class

@@ -5,11 +5,13 @@
  */
 package io.github.eggy03.dmidecode.service.board;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMIPortConnectorInformation;
 import io.github.eggy03.dmidecode.mapper.board.DMIPortConnectionInformationMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class DMIPortConnectorInformationService implements CommonDMIServiceInter
      * @since 0.1.0
      */
     @Override
-    public List<DMIPortConnectorInformation> get(long timeout) {
+    public @Unmodifiable @NonNull List<DMIPortConnectorInformation> get(long timeout) {
         return new DMIPortConnectionInformationMapper().mapToList(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), timeout),
                 DMIPortConnectorInformation.class

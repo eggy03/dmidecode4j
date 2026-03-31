@@ -10,6 +10,7 @@ import io.github.eggy03.dmidecode.entity.memory.DMIPhysicalMemoryArray;
 import io.github.eggy03.dmidecode.mapper.physicalmemory.DMIPhysicalMemoryArrayMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceIn
      * @since 0.1.0
      */
     @Override
-    public Optional<DMIPhysicalMemoryArray> get(long timeout) {
+    public @NonNull Optional<DMIPhysicalMemoryArray> get(long timeout) {
         return new DMIPhysicalMemoryArrayMapper().mapToEntity(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PHYSICAL_MEMORY_ARRAY.getValue()), timeout),
                 DMIPhysicalMemoryArray.class

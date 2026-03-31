@@ -10,7 +10,7 @@ import io.github.eggy03.dmidecode.entity.board.DMIBIOSLanguage;
 import io.github.eggy03.dmidecode.mapper.board.DMIBIOSLanguageMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -47,8 +47,7 @@ public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public Optional<DMIBIOSLanguage> get(long timeout) {
+    public @NonNull Optional<DMIBIOSLanguage> get(long timeout) {
         return new DMIBIOSLanguageMapper().mapToEntity(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS_LANGUAGE.getValue()), timeout),
                 DMIBIOSLanguage.class

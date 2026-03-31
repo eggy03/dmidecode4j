@@ -10,7 +10,7 @@ import io.github.eggy03.dmidecode.entity.board.DMIBaseboard;
 import io.github.eggy03.dmidecode.mapper.board.DMIBaseboardMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -48,8 +48,7 @@ public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DM
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public Optional<DMIBaseboard> get(long timeout) {
+    public @NonNull Optional<DMIBaseboard> get(long timeout) {
         return new DMIBaseboardMapper().mapToEntity(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BASEBOARD.getValue()), timeout),
                 DMIBaseboard.class

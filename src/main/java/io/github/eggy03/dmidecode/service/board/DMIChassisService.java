@@ -10,7 +10,7 @@ import io.github.eggy03.dmidecode.entity.board.DMIChassis;
 import io.github.eggy03.dmidecode.mapper.board.DMIChassisMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -47,8 +47,7 @@ public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIC
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public Optional<DMIChassis> get(long timeout) {
+    public @NonNull Optional<DMIChassis> get(long timeout) {
         return new DMIChassisMapper().mapToEntity(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CHASSIS.getValue()), timeout),
                 DMIChassis.class

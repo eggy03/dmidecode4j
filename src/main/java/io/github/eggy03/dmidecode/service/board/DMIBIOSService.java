@@ -5,12 +5,13 @@
  */
 package io.github.eggy03.dmidecode.service.board;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMIBIOS;
 import io.github.eggy03.dmidecode.mapper.board.DMIBIOSMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -47,8 +48,7 @@ public class DMIBIOSService implements CommonDMIServiceInterface<DMIBIOS> {
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public List<DMIBIOS> get(long timeout) {
+    public @NonNull @Unmodifiable List<DMIBIOS> get(long timeout) {
         return new DMIBIOSMapper().mapToList(
                 TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS.getValue()), timeout),
                 DMIBIOS.class
