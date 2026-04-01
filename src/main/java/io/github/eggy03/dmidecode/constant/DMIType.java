@@ -5,8 +5,6 @@
  */
 package io.github.eggy03.dmidecode.constant;
 
-import lombok.RequiredArgsConstructor;
-
 /**
  * Enumeration of DMI types as defined by the
  * {@code dmidecode} specification.
@@ -23,7 +21,6 @@ import lombok.RequiredArgsConstructor;
  *
  * @since 0.1.0
  */
-@RequiredArgsConstructor
 public enum DMIType {
 
     BIOS(0),
@@ -70,6 +67,8 @@ public enum DMIType {
     ONBOARD_DEVICE(41);
     
     private final int value;
+
+    DMIType(int value){this.value = value;}
 
     public static String getCommandFor(DMIType type){
         return "sudo /usr/sbin/dmidecode --type " + type.value;

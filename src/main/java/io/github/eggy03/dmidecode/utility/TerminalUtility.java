@@ -6,14 +6,14 @@
 package io.github.eggy03.dmidecode.utility;
 
 import io.github.eggy03.dmidecode.exception.TerminalExecutionException;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
+import org.jspecify.annotations.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,9 +26,13 @@ import java.time.Duration;
  *
  * @since 0.1.0
  */
-@UtilityClass
-@Slf4j
 public class TerminalUtility {
+
+    private static final Logger log = LoggerFactory.getLogger(TerminalUtility.class);
+
+    private TerminalUtility(){
+        throw new IllegalStateException("Utility Class");
+    }
 
     /**
      * Launches a standalone terminal session, executes the given command
@@ -41,7 +45,7 @@ public class TerminalUtility {
      *                                   or when the command yields an error, or when the terminal cannot be accessed.
      * @throws IllegalArgumentException If the provided timeout is in the negative
      */
-    public static String executeCommand(@NonNull String command, long timeoutSeconds) {
+    public static @NonNull String executeCommand(@NonNull String command, long timeoutSeconds) {
 
         if(timeoutSeconds<0)
             throw new IllegalArgumentException("Timeout cannot be negative");
