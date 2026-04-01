@@ -6,6 +6,8 @@
 package io.github.eggy03.dmidecode.mapper;
 
 import io.github.eggy03.dmidecode.annotation.Unmodifiable;
+import io.github.eggy03.dmidecode.annotation.fragility.FragileMethod;
+import io.github.eggy03.dmidecode.annotation.fragility.MethodType;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
@@ -83,6 +85,12 @@ public interface CommonDMIMapper<S> {
      *         no mappable data is found
      * @since 0.1.0
      */
+    @FragileMethod(
+            type = MethodType.INTERFACE_DEFAULT_METHOD,
+            reason = "Parsing formatted human readable dmidecode output is always error-prone and subject to change without notice",
+            requiresReplacement = true,
+            replacementNote = "Consider using --json flag of dmidecode if available"
+    )
     default @NonNull Optional<S> mapToEntity(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 
         if(rawDMIData==null)
@@ -179,6 +187,12 @@ public interface CommonDMIMapper<S> {
      * @return a non-null list of mapped entities
      * @since 0.1.0
      */
+    @FragileMethod(
+            type = MethodType.INTERFACE_DEFAULT_METHOD,
+            reason = "Parsing formatted human readable dmidecode output is always error-prone and subject to change without notice",
+            requiresReplacement = true,
+            replacementNote = "Consider using --json flag of dmidecode if available"
+    )
     default @NonNull @Unmodifiable List<S> mapToList(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 
         if(rawDMIData==null)

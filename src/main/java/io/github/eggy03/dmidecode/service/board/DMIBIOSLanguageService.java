@@ -5,8 +5,11 @@
  */
 package io.github.eggy03.dmidecode.service.board;
 
+import io.github.eggy03.dmidecode.annotation.fragility.InvokesFragileMethod;
+import io.github.eggy03.dmidecode.annotation.fragility.MethodType;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMIBIOSLanguage;
+import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIBIOSLanguageMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
@@ -46,6 +49,7 @@ public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface
      * @since 0.1.0
      */
     @Override
+    @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
     public @NonNull Optional<DMIBIOSLanguage> get(long timeout) {
         return new DMIBIOSLanguageMapper().mapToEntity(
                 TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.BIOS_LANGUAGE), timeout),

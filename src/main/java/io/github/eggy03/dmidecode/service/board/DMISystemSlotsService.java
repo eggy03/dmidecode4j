@@ -6,8 +6,11 @@
 package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.annotation.Unmodifiable;
+import io.github.eggy03.dmidecode.annotation.fragility.InvokesFragileMethod;
+import io.github.eggy03.dmidecode.annotation.fragility.MethodType;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMISystemSlots;
+import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMISystemSlotsMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
@@ -48,6 +51,7 @@ public class DMISystemSlotsService implements CommonDMIServiceInterface<DMISyste
      * @since 0.1.0
      */
     @Override
+    @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
     public @Unmodifiable @NonNull List<DMISystemSlots> get(long timeout) {
         return new DMISystemSlotsMapper().mapToList(
                 TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.SYSTEM_SLOTS), timeout),

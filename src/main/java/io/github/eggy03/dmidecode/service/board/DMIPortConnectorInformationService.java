@@ -6,8 +6,11 @@
 package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.annotation.Unmodifiable;
+import io.github.eggy03.dmidecode.annotation.fragility.InvokesFragileMethod;
+import io.github.eggy03.dmidecode.annotation.fragility.MethodType;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMIPortConnectorInformation;
+import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIPortConnectionInformationMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
@@ -48,6 +51,7 @@ public class DMIPortConnectorInformationService implements CommonDMIServiceInter
      * @since 0.1.0
      */
     @Override
+    @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
     public @Unmodifiable @NonNull List<DMIPortConnectorInformation> get(long timeout) {
         return new DMIPortConnectionInformationMapper().mapToList(
                 TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PORT_CONNECTOR), timeout),
