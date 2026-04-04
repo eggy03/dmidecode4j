@@ -8,6 +8,18 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * <p>
+ *    A custom annotation that is intended to be applied with {@link Value.Immutable},
+ *    on {@link io.github.eggy03.dmidecode.entity} package classes.
+ * </p>
+ * <p>
+ *     It modifies the naming and structural style of the generated immutable implementations via {@link Value.Style}
+ *     and contains {@link JsonSerialize} for automatic Jackson integration.
+ * </p>
+ *
+ * @since 0.2.0
+ */
 @Target({ElementType.PACKAGE, ElementType.TYPE})
 @Retention(RetentionPolicy.CLASS) // Make it class retention for incremental compilation
 @JsonSerialize // Jackson automatic integration
@@ -19,4 +31,4 @@ import java.lang.annotation.Target;
         // Generated builders will have attributes annotated with @JsonProperty so deserialization will work properly.
         defaults = @Value.Immutable(copy = true) // Enable copy methods
 )
-public @interface ImmutableStyle {}
+public @interface ImmutableEntityStyle {}

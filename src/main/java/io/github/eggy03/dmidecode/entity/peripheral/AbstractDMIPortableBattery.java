@@ -6,7 +6,7 @@
 package io.github.eggy03.dmidecode.entity.peripheral;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.eggy03.dmidecode.annotation.ImmutableStyle;
+import io.github.eggy03.dmidecode.annotation.ImmutableEntityStyle;
 import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -39,7 +39,7 @@ import tools.jackson.databind.ObjectMapper;
  * @since 0.2.0
  */
 @Value.Immutable
-@ImmutableStyle
+@ImmutableEntityStyle
 @NullMarked
 public abstract class AbstractDMIPortableBattery {
 
