@@ -17,7 +17,7 @@
         <project.url>https://github.com/eggy03/dmidecode4j</project.url>
 
         <project.license.name>The MIT License</project.license.name>
-        <project.license.url>https://raw.githubusercontent.com/eggy03/dmidecode4j/refs/heads/main/LICENSE</project.license.url>
+        <project.license.url>https://raw.githubusercontent.com/eggy03/dmidecode4j/refs/heads/master/LICENSE</project.license.url>
 
         <project.developer.id>Egg-03</project.developer.id>
         <project.developer.name>Sayan Bhattacharjee</project.developer.name>
@@ -39,13 +39,13 @@
         <slf4j.api.version>2.0.17</slf4j.api.version>
 
         <!-- plugins version -->
-        <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
-        <surefire.version>3.5.4</surefire.version>
+        <maven.compiler.plugin.version>3.15.0</maven.compiler.plugin.version>
+        <surefire.version>3.5.5</surefire.version>
         <maven.antrun.plugin.version>3.2.0</maven.antrun.plugin.version>
         <build.helper.maven.plugin.version>3.6.1</build.helper.maven.plugin.version>
         <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
         <sign.maven.plugin.version>1.1.0</sign.maven.plugin.version>
-        <central.publishing.maven.plugin.version>0.9.0</central.publishing.maven.plugin.version>
+        <central.publishing.maven.plugin.version>0.10.0</central.publishing.maven.plugin.version>
         <jacoco.maven.plugin.version>0.8.14</jacoco.maven.plugin.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
     </properties>
