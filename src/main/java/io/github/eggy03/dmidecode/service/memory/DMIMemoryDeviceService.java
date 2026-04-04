@@ -42,9 +42,8 @@ public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemo
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMIMemoryDevice} objects representing
-     *         the system memory device entries.
-     *         Returns an empty list if no memory device entries are detected.
-     *
+     * the system memory device entries.
+     * Returns an empty list if no memory device entries are detected.
      * @since 0.1.0
      */
     @Override

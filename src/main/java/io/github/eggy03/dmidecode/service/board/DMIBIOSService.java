@@ -45,8 +45,7 @@ public class DMIBIOSService implements CommonDMIServiceInterface<DMIBIOS> {
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMIBIOS} objects representing the system BIOS entries.
-     *         Returns an empty list if no BIOS entries are detected.
-     *
+     * Returns an empty list if no BIOS entries are detected.
      * @since 0.1.0
      */
     @Override

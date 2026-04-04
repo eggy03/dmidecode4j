@@ -8,21 +8,21 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- *      When marked on a method (or a constructor), it serves as an indication that
- *      the method's behavior depends on unstable and or environment-specific logic
- *      and may break without notice.
+ * When marked on a method (or a constructor), it serves as an indication that
+ * the method's behavior depends on unstable and or environment-specific logic
+ * and may break without notice.
  * </p>
  * <p>
- *    A method annotated with {@code @FragileMethod} should not be used in production.
- *    However, if usage in production is unavoidable, any method or constructor that
- *    invokes a fragile method in its definition should be annotated with {@code @InvokesFragileMethod}.
+ * A method annotated with {@code @FragileMethod} should not be used in production.
+ * However, if usage in production is unavoidable, any method or constructor that
+ * invokes a fragile method in its definition should be annotated with {@code @InvokesFragileMethod}.
  * </p>
  * <p>
- *     This annotation is for documentation purposes only.
+ * This annotation is for documentation purposes only.
  * </p>
  *
- * @since 0.2.0
  * @see InvokesFragileMethod
+ * @since 0.2.0
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

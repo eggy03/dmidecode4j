@@ -3,9 +3,9 @@ package io.github.eggy03.dmidecode.annotation.fragility;
 /**
  * Enum to classify the type of method that is marked as fragile
  *
- * @since 0.2.0
  * @see FragileMethod
  * @see InvokesFragileMethod
+ * @since 0.2.0
  */
 public enum MethodType {
 

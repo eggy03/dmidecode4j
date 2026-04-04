@@ -44,8 +44,7 @@ public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return an {@link Optional} containing {@link DMIBIOSLanguage} information if present,
-     *         or {@link Optional#empty()} if no BIOS language entry is detected
-     *
+     * or {@link Optional#empty()} if no BIOS language entry is detected
      * @since 0.1.0
      */
     @Override

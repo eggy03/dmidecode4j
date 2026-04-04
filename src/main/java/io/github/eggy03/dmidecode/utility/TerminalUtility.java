@@ -30,7 +30,7 @@ public class TerminalUtility {
 
     private static final Logger log = LoggerFactory.getLogger(TerminalUtility.class);
 
-    private TerminalUtility(){
+    private TerminalUtility() {
         throw new IllegalStateException("Utility Class");
     }
 
@@ -38,16 +38,16 @@ public class TerminalUtility {
      * Launches a standalone terminal session, executes the given command
      * and returns the result
      *
-     * @param command The command/script to be executed in the terminal
+     * @param command        The command/script to be executed in the terminal
      * @param timeoutSeconds Time in seconds after which the session will be force stopped
      * @return The result of the command executed
      * @throws TerminalExecutionException When the process is killed pre-maturely upon reaching the timeout
-     *                                   or when the command yields an error, or when the terminal cannot be accessed.
-     * @throws IllegalArgumentException If the provided timeout is in the negative
+     *                                    or when the command yields an error, or when the terminal cannot be accessed.
+     * @throws IllegalArgumentException   If the provided timeout is in the negative
      */
     public static @NonNull String executeCommand(@NonNull String command, long timeoutSeconds) {
 
-        if(timeoutSeconds<0)
+        if (timeoutSeconds < 0)
             throw new IllegalArgumentException("Timeout cannot be negative");
 
         CommandLine cmdLine = new CommandLine("bash");
@@ -70,7 +70,7 @@ public class TerminalUtility {
         } catch (ExecuteException e) {
             String reason = watchdog.killedProcess() ?
                     "\nProcess executing the following command: " + command + "\nWas killed after a timeout of " + timeoutSeconds + " seconds\n" :
-                    "\nProcess executing the following command: " + command + "\nExited with a non-zero exit code\nTerminal Error Output: "+ err;
+                    "\nProcess executing the following command: " + command + "\nExited with a non-zero exit code\nTerminal Error Output: " + err;
 
             throw new TerminalExecutionException(reason, e);
         } catch (IOException e) {

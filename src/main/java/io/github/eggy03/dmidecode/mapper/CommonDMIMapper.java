@@ -79,10 +79,11 @@ public interface CommonDMIMapper<S> {
      *         64-bit capable
      *         Multi-Core
      * </pre>
-     * @param rawDMIData the raw {@code dmidecode} output
+     *
+     * @param rawDMIData          the raw {@code dmidecode} output
      * @param mappableEntityClass the target entity class
      * @return an {@link Optional} containing the mapped entity, or empty if
-     *         no mappable data is found
+     * no mappable data is found
      * @since 0.1.0
      */
     @FragileMethod(
@@ -93,7 +94,7 @@ public interface CommonDMIMapper<S> {
     )
     default @NonNull Optional<S> mapToEntity(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 
-        if(rawDMIData==null)
+        if (rawDMIData == null)
             return Optional.empty();
 
         Map<String, Object> keyValueMap = new LinkedHashMap<>();
@@ -107,7 +108,7 @@ public interface CommonDMIMapper<S> {
 
             if (currentLine.contains(":")) {
                 // store the previous key and value if present, indicated by a key of length greater than 0
-                if (key!=null && !key.isEmpty()) {
+                if (key != null && !key.isEmpty()) {
                     // if the value has multi lines, insert them or else insert the single line value
                     keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
                 }
@@ -132,7 +133,7 @@ public interface CommonDMIMapper<S> {
             }
         }
         // Store the last key/value pair
-        if (key!=null && !key.isEmpty()) {
+        if (key != null && !key.isEmpty()) {
             keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
         }
 
@@ -182,7 +183,7 @@ public interface CommonDMIMapper<S> {
      *     Associativity: 16-way Set-associative
      * </pre>
      *
-     * @param rawDMIData the raw {@code dmidecode} output
+     * @param rawDMIData          the raw {@code dmidecode} output
      * @param mappableEntityClass the target entity class
      * @return a non-null list of mapped entities
      * @since 0.1.0
@@ -195,7 +196,7 @@ public interface CommonDMIMapper<S> {
     )
     default @NonNull @Unmodifiable List<S> mapToList(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 
-        if(rawDMIData==null)
+        if (rawDMIData == null)
             return Collections.emptyList();
 
         List<S> entityList = new ArrayList<>();
@@ -214,7 +215,7 @@ public interface CommonDMIMapper<S> {
 
                 if (currentLine.contains(":")) {
                     // store the previous key and value if present, indicated by a key of length greater than 0
-                    if (key!=null && !key.isEmpty()) {
+                    if (key != null && !key.isEmpty()) {
                         // if the value has multi lines, insert them or else insert the single line value
                         keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
                     }
@@ -239,7 +240,7 @@ public interface CommonDMIMapper<S> {
                 }
             }
             // Store the last key/value pair in this DMI block
-            if (key!=null && !key.isEmpty()) {
+            if (key != null && !key.isEmpty()) {
                 keyValueMap.put(key, !multiLineValues.isEmpty() ? new ArrayList<>(multiLineValues) : singleLineValue);
             }
 

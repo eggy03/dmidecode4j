@@ -42,7 +42,7 @@ import tools.jackson.databind.ObjectMapper;
 @ImmutableEntityStyle
 @NullMarked
 public abstract class AbstractDMISystem {
-    
+
     @JsonProperty("Manufacturer")
     @Nullable
     public abstract String manufacturer();

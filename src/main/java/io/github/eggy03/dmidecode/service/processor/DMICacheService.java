@@ -42,9 +42,8 @@ public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMICache} objects representing
-     *         the system cache entries.
-     *         Returns an empty list if no cache entries are detected.
-     *
+     * the system cache entries.
+     * Returns an empty list if no cache entries are detected.
      * @since 0.1.0
      */
     @Override

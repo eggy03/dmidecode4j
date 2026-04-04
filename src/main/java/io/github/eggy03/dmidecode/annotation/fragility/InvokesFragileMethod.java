@@ -9,15 +9,15 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- *     When marked on a method (or a constructor), it indicates that annotated method or constructor
- *     has a definition that invokes a method or a constructor annotated with {@code FragileMethod}
+ * When marked on a method (or a constructor), it indicates that annotated method or constructor
+ * has a definition that invokes a method or a constructor annotated with {@code FragileMethod}
  * </p>
  * <p>
- *     This annotation is for documentation purposes only.
+ * This annotation is for documentation purposes only.
  * </p>
  *
- * @since 0.2.0
  * @see FragileMethod
+ * @since 0.2.0
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

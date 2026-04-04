@@ -41,9 +41,8 @@ public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceIn
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return an {@link Optional} containing {@link DMIPhysicalMemoryArray} information
-     *         if present, or {@link Optional#empty()} if no physical memory array
-     *         entry is detected
-     *
+     * if present, or {@link Optional#empty()} if no physical memory array
+     * entry is detected
      * @since 0.1.0
      */
     @Override

@@ -65,12 +65,14 @@ public enum DMIType {
     POWER_SUPPLY(39),
     ADDITIONAL_INFORMATION(40),
     ONBOARD_DEVICE(41);
-    
+
     private final int value;
 
-    DMIType(int value){this.value = value;}
+    DMIType(int value) {
+        this.value = value;
+    }
 
-    public static String getCommandFor(DMIType type){
+    public static String getCommandFor(DMIType type) {
         return "sudo /usr/sbin/dmidecode --type " + type.value;
     }
 }

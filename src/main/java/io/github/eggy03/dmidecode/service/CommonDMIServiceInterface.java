@@ -17,9 +17,8 @@ import java.util.List;
  * </p>
  *
  * @param <S> the entity type returned by the service implementation
- *
- * @since 0.1.0
  * @see OptionalCommonDMIServiceInterface
+ * @since 0.1.0
  */
 public interface CommonDMIServiceInterface<S> {
 
@@ -31,7 +30,6 @@ public interface CommonDMIServiceInterface<S> {
      *                {@code dmidecode} command to complete before
      *                terminating the process
      * @return a {@link List} of entities of type {@code <S>} defined by the caller
-     *
      * @since 0.1.0
      */
     List<S> get(long timeout);

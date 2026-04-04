@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- *     Indicates that the underlying `Collection` or `Map` is unmodifiable.
- *     Any attempts to mutate such a collection or map may result in exceptions being
- *     thrown, or no result at all.
+ * Indicates that the underlying `Collection` or `Map` is unmodifiable.
+ * Any attempts to mutate such a collection or map may result in exceptions being
+ * thrown, or no result at all.
  * </p>
  * <p>
- *     The referenced objects within the collection or map may still be mutable, depending on
- *     their implementation.
+ * The referenced objects within the collection or map may still be mutable, depending on
+ * their implementation.
  * </p>
  *
  * @since 0.2.0

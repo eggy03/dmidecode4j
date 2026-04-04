@@ -42,9 +42,8 @@ public class DMIPortableBatteryService implements CommonDMIServiceInterface<DMIP
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMIPortableBattery} objects representing
-     *         the system portable battery entries.
-     *         Returns an empty list if no portable battery entries are detected.
-     *
+     * the system portable battery entries.
+     * Returns an empty list if no portable battery entries are detected.
      * @since 0.1.0
      */
     @Override

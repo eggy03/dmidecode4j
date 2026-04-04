@@ -45,9 +45,8 @@ public class DMIPortConnectorInformationService implements CommonDMIServiceInter
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMIPortConnectorInformation} objects representing
-     *         the system port connector entries.
-     *         Returns an empty list if no port connector entries are detected.
-     *
+     * the system port connector entries.
+     * Returns an empty list if no port connector entries are detected.
      * @since 0.1.0
      */
     @Override

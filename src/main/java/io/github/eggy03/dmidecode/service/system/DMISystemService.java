@@ -42,9 +42,8 @@ public class DMISystemService implements OptionalCommonDMIServiceInterface<DMISy
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return an {@link Optional} containing {@link DMISystem} information
-     *         if present, or {@link Optional#empty()} if no system entry
-     *         is detected
-     *
+     * if present, or {@link Optional#empty()} if no system entry
+     * is detected
      * @since 0.1.0
      */
     @Override

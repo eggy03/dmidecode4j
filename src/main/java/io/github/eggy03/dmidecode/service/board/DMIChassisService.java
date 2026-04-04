@@ -44,8 +44,7 @@ public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIC
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return an {@link Optional} containing {@link DMIChassis} information if present,
-     *         or {@link Optional#empty()} if no chassis entry is detected
-     *
+     * or {@link Optional#empty()} if no chassis entry is detected
      * @since 0.1.0
      */
     @Override

@@ -45,9 +45,8 @@ public class DMISystemSlotsService implements CommonDMIServiceInterface<DMISyste
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMISystemSlots} objects representing
-     *         the system slot entries.
-     *         Returns an empty list if no system slot entries are detected.
-     *
+     * the system slot entries.
+     * Returns an empty list if no system slot entries are detected.
      * @since 0.1.0
      */
     @Override

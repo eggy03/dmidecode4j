@@ -17,9 +17,8 @@ import java.util.Optional;
  * </p>
  *
  * @param <S> the entity type returned by the service implementation
- *
- * @since 0.1.0
  * @see CommonDMIServiceInterface
+ * @since 0.1.0
  */
 public interface OptionalCommonDMIServiceInterface<S> {
 
@@ -32,9 +31,8 @@ public interface OptionalCommonDMIServiceInterface<S> {
      *                {@code dmidecode} command to complete before
      *                terminating the process
      * @return an {@link Optional} containing the entity of type {@code <S>}
-     *         if present, or {@link Optional#empty()} if the information
-     *         is unavailable or not reported by the system
-     *
+     * if present, or {@link Optional#empty()} if the information
+     * is unavailable or not reported by the system
      * @since 0.1.0
      */
     Optional<S> get(long timeout);

@@ -42,8 +42,7 @@ public class DMIProcessorService implements CommonDMIServiceInterface<DMIProcess
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list containing {@link DMIProcessor} entries
-     *         if present, or an empty list if no processor entries are detected
-     *
+     * if present, or an empty list if no processor entries are detected
      * @since 0.1.0
      */
     @Override
