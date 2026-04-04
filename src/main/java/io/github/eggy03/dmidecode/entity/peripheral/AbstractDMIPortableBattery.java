@@ -10,6 +10,7 @@ import io.github.eggy03.dmidecode.annotation.ImmutableStyle;
 import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Immutable representation of portable battery information retrieved via DMI.
@@ -85,4 +86,11 @@ public abstract class AbstractDMIPortableBattery {
     @JsonProperty("OEM-specific Information")
     @Nullable
     public abstract String oemSpecificInformation();
+
+    @Override
+    public String toString() {
+        return new ObjectMapper()
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(this);
+    }
 }

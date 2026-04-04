@@ -10,6 +10,7 @@ import io.github.eggy03.dmidecode.annotation.ImmutableStyle;
 import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Immutable representation of physical memory array information retrieved via DMI.
@@ -65,4 +66,11 @@ public abstract class AbstractDMIPhysicalMemoryArray {
     @JsonProperty("Number Of Devices")
     @Nullable
     public abstract Integer numberOfDevices();
+
+    @Override
+    public String toString() {
+        return new ObjectMapper()
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(this);
+    }
 }

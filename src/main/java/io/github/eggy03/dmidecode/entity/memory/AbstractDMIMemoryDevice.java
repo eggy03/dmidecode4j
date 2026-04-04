@@ -10,6 +10,7 @@ import io.github.eggy03.dmidecode.annotation.ImmutableStyle;
 import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Immutable representation of memory device information retrieved via DMI.
@@ -170,4 +171,11 @@ public abstract class AbstractDMIMemoryDevice {
     @JsonProperty("Logical Size")
     @Nullable
     public abstract String logicalSize();
+
+    @Override
+    public String toString() {
+        return new ObjectMapper()
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(this);
+    }
 }

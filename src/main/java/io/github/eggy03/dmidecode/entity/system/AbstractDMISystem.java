@@ -10,6 +10,7 @@ import io.github.eggy03.dmidecode.annotation.ImmutableStyle;
 import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Immutable representation of system information retrieved via DMI.
@@ -73,4 +74,11 @@ public abstract class AbstractDMISystem {
     @JsonProperty("Family")
     @Nullable
     public abstract String family();
+
+    @Override
+    public String toString() {
+        return new ObjectMapper()
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(this);
+    }
 }

@@ -10,6 +10,7 @@ import io.github.eggy03.dmidecode.annotation.ImmutableStyle;
 import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
@@ -71,5 +72,11 @@ public abstract class AbstractDMISystemSlots {
     @JsonProperty("Bus Address")
     @Nullable
     public abstract String busAddress();
-    
+
+    @Override
+    public String toString() {
+        return new ObjectMapper()
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(this);
+    }
 }
