@@ -32,7 +32,7 @@ class DMIPortConnectorInformationServiceTest {
                 "\tPort Type: USB"
         );
 
-        mockDMIClass = DMIPortConnectorInformation.builder()
+        mockDMIClass = new DMIPortConnectorInformation.Builder()
                 .externalReferenceDesignator("USB1")
                 .internalReferenceDesignator("JUSB1")
                 .externalConnectorType("USB")

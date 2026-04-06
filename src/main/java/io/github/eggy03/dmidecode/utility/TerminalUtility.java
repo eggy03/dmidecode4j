@@ -6,14 +6,14 @@
 package io.github.eggy03.dmidecode.utility;
 
 import io.github.eggy03.dmidecode.exception.TerminalExecutionException;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,27 +23,31 @@ import java.time.Duration;
  * A utility class that provides a way to launch a terminal session
  * <p>
  * <b>Mostly for internal use </b>
- * @author Sayan Bhattacharya
+ *
  * @since 0.1.0
  */
-@UtilityClass
-@Slf4j
 public class TerminalUtility {
+
+    private static final Logger log = LoggerFactory.getLogger(TerminalUtility.class);
+
+    private TerminalUtility() {
+        throw new IllegalStateException("Utility Class");
+    }
 
     /**
      * Launches a standalone terminal session, executes the given command
      * and returns the result
      *
-     * @param command The command/script to be executed in the terminal
+     * @param command        The command/script to be executed in the terminal
      * @param timeoutSeconds Time in seconds after which the session will be force stopped
      * @return The result of the command executed
      * @throws TerminalExecutionException When the process is killed pre-maturely upon reaching the timeout
-     *                                   or when the command yields an error, or when the terminal cannot be accessed.
-     * @throws IllegalArgumentException If the provided timeout is in the negative
+     *                                    or when the command yields an error, or when the terminal cannot be accessed.
+     * @throws IllegalArgumentException   If the provided timeout is in the negative
      */
-    public static String executeCommand(@NotNull String command, long timeoutSeconds) {
+    public static @NonNull String executeCommand(@NonNull String command, long timeoutSeconds) {
 
-        if(timeoutSeconds<0)
+        if (timeoutSeconds < 0)
             throw new IllegalArgumentException("Timeout cannot be negative");
 
         CommandLine cmdLine = new CommandLine("bash");
@@ -66,7 +70,7 @@ public class TerminalUtility {
         } catch (ExecuteException e) {
             String reason = watchdog.killedProcess() ?
                     "\nProcess executing the following command: " + command + "\nWas killed after a timeout of " + timeoutSeconds + " seconds\n" :
-                    "\nProcess executing the following command: " + command + "\nExited with a non-zero exit code\nTerminal Error Output: "+ err;
+                    "\nProcess executing the following command: " + command + "\nExited with a non-zero exit code\nTerminal Error Output: " + err;
 
             throw new TerminalExecutionException(reason, e);
         } catch (IOException e) {

@@ -39,7 +39,7 @@ class DMIBIOSServiceTest {
                 "\tFirmware Revision: 1.12"
         );
 
-        mockDMIClass = DMIBIOS.builder()
+        mockDMIClass = new DMIBIOS.Builder()
                 .vendor("American Megatrends Inc.")
                 .version("F10")
                 .releaseDate("07/15/2023")

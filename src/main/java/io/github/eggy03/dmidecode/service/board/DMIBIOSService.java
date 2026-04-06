@@ -5,12 +5,16 @@
  */
 package io.github.eggy03.dmidecode.service.board;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
+import io.github.eggy03.dmidecode.annotation.fragility.InvokesFragileMethod;
+import io.github.eggy03.dmidecode.annotation.fragility.MethodType;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMIBIOS;
+import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIBIOSMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -28,7 +32,6 @@ import java.util.List;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIBIOSService implements CommonDMIServiceInterface<DMIBIOS> {
 
@@ -42,15 +45,14 @@ public class DMIBIOSService implements CommonDMIServiceInterface<DMIBIOS> {
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMIBIOS} objects representing the system BIOS entries.
-     *         Returns an empty list if no BIOS entries are detected.
-     *
+     * Returns an empty list if no BIOS entries are detected.
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public List<DMIBIOS> get(long timeout) {
+    @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
+    public @NonNull @Unmodifiable List<DMIBIOS> get(long timeout) {
         return new DMIBIOSMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.BIOS.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.BIOS), timeout),
                 DMIBIOS.class
         );
     }

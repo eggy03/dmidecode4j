@@ -5,12 +5,13 @@
  */
 package io.github.eggy03.dmidecode.service.processor;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.processor.DMICache;
 import io.github.eggy03.dmidecode.mapper.processor.DMICacheMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -28,7 +29,6 @@ import java.util.List;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
 
@@ -42,16 +42,14 @@ public class DMICacheService implements CommonDMIServiceInterface<DMICache> {
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMICache} objects representing
-     *         the system cache entries.
-     *         Returns an empty list if no cache entries are detected.
-     *
+     * the system cache entries.
+     * Returns an empty list if no cache entries are detected.
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public List<DMICache> get(long timeout) {
+    public @Unmodifiable @NonNull List<DMICache> get(long timeout) {
         return new DMICacheMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CACHE.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.CACHE), timeout),
                 DMICache.class
         );
     }

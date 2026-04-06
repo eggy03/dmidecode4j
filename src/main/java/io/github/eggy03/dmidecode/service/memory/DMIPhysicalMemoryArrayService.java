@@ -10,6 +10,7 @@ import io.github.eggy03.dmidecode.entity.memory.DMIPhysicalMemoryArray;
 import io.github.eggy03.dmidecode.mapper.physicalmemory.DMIPhysicalMemoryArrayMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -27,7 +28,6 @@ import java.util.Optional;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceInterface<DMIPhysicalMemoryArray> {
 
@@ -41,15 +41,14 @@ public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceIn
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return an {@link Optional} containing {@link DMIPhysicalMemoryArray} information
-     *         if present, or {@link Optional#empty()} if no physical memory array
-     *         entry is detected
-     *
+     * if present, or {@link Optional#empty()} if no physical memory array
+     * entry is detected
      * @since 0.1.0
      */
     @Override
-    public Optional<DMIPhysicalMemoryArray> get(long timeout) {
+    public @NonNull Optional<DMIPhysicalMemoryArray> get(long timeout) {
         return new DMIPhysicalMemoryArrayMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PHYSICAL_MEMORY_ARRAY.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PHYSICAL_MEMORY_ARRAY), timeout),
                 DMIPhysicalMemoryArray.class
         );
     }

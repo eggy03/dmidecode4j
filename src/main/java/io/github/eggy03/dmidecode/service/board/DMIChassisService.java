@@ -5,12 +5,15 @@
  */
 package io.github.eggy03.dmidecode.service.board;
 
+import io.github.eggy03.dmidecode.annotation.fragility.InvokesFragileMethod;
+import io.github.eggy03.dmidecode.annotation.fragility.MethodType;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMIChassis;
+import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIChassisMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -28,7 +31,6 @@ import java.util.Optional;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIChassis> {
 
@@ -42,15 +44,14 @@ public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIC
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return an {@link Optional} containing {@link DMIChassis} information if present,
-     *         or {@link Optional#empty()} if no chassis entry is detected
-     *
+     * or {@link Optional#empty()} if no chassis entry is detected
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public Optional<DMIChassis> get(long timeout) {
+    @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
+    public @NonNull Optional<DMIChassis> get(long timeout) {
         return new DMIChassisMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.CHASSIS.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.CHASSIS), timeout),
                 DMIChassis.class
         );
     }

@@ -41,7 +41,7 @@ class DMIBaseboardServiceTest {
                 );
 
 
-        mockDMIClass = DMIBaseboard.builder()
+        mockDMIClass = new DMIBaseboard.Builder()
                 .manufacturer("ASUSTeK COMPUTER INC.")
                 .productName("PRIME B550M-A")
                 .version("Rev X.0x")
@@ -84,7 +84,7 @@ class DMIBaseboardServiceTest {
                     .thenReturn("invalid output");
 
 
-            assertThat(service.get(15)).contains(DMIBaseboard.builder().build());
+            assertThat(service.get(15)).contains(new DMIBaseboard.Builder().build());
 
         }
     }

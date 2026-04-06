@@ -37,7 +37,7 @@ class DMIPortableBatteryServiceTest {
                 "\tOEM-specific Information: None"
         );
 
-        mockDMIClass = DMIPortableBattery.builder()
+        mockDMIClass = new DMIPortableBattery.Builder()
                 .location("Internal Battery")
                 .manufacturer("LG")
                 .name("BAT0")

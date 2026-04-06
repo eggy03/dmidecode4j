@@ -53,5 +53,53 @@ public class ProcessorExample {
     }
 }
 ```
+
+# Implementation Status
+
+| Number | Type                             | Status      |
+|--------|----------------------------------|-------------|
+| 0      | BIOS                             | Implemented |
+| 1      | SYSTEM                           | Implemented |
+| 2      | BASEBOARD                        | Implemented |
+| 3      | CHASSIS                          | Implemented |
+| 4      | PROCESSOR                        | Implemented |
+| 5      | MEMORY_CONTROLLER                | Pending     |
+| 6      | MEMORY_MODULE                    | Pending     |
+| 7      | CACHE                            | Implemented |
+| 8      | PORT_CONNECTOR                   | Implemented |
+| 9      | SYSTEM_SLOTS                     | Implemented |
+| 10     | ONBOARD_DEVICES                  | Pending     |
+| 11     | OEM_SETTINGS                     | Pending     |
+| 12     | SYSTEM_CONFIGURATION_OPTIONS     | Pending     |
+| 13     | BIOS_LANGUAGE                    | Implemented |
+| 14     | GROUP_ASSOCIATIONS               | Pending     |
+| 15     | SYSTEM_EVENT_LOG                 | Pending     |
+| 16     | PHYSICAL_MEMORY_ARRAY            | Implemented |
+| 17     | MEMORY_DEVICE                    | Implemented |
+| 18     | THIRTY_TWO_BIT_MEMORY_ERROR      | Pending     |
+| 19     | MEMORY_ARRAY_MAPPED_ADDRESS      | Pending     |
+| 20     | MEMORY_DEVICE_MAPPED_ADDRESS     | Pending     |
+| 21     | BUILT_IN_POINTING_DEVICE         | Pending     |
+| 22     | PORTABLE_BATTERY                 | Implemented |
+| 23     | SYSTEM_RESET                     | Pending     |
+| 24     | HARDWARE_SECURITY                | Pending     |
+| 25     | SYSTEM_POWER_CONTROLS            | Pending     |
+| 26     | VOLTAGE_PROBE                    | Pending     |
+| 27     | COOLING_DEVICE                   | Pending     |
+| 28     | TEMPERATURE_PROBE                | Pending     |
+| 29     | ELECTRICAL_CURRENT_PROBE         | Pending     |
+| 30     | OUT_OF_BAND_REMOTE_ACCESS        | Pending     |
+| 31     | BOOT_INTEGRITY_SERVICES          | Pending     |
+| 32     | SYSTEM_BOOT                      | Pending     |
+| 33     | SIXTY_FOUR_BIT_MEMORY_ERROR      | Pending     |
+| 34     | MANAGEMENT_DEVICE                | Pending     |
+| 35     | MANAGEMENT_DEVICE_COMPONENT      | Pending     |
+| 36     | MANAGEMENT_DEVICE_THRESHOLD_DATA | Pending     |
+| 37     | MEMORY_CHANNEL                   | Pending     |
+| 38     | IPMI_DEVICE                      | Pending     |
+| 39     | POWER_SUPPLY                     | Pending     |
+| 40     | ADDITIONAL_INFORMATION           | Pending     |
+| 41     | ONBOARD_DEVICE                   | Pending     |
+
 # License
 This project is licensed under the [MIT License](/LICENSE).

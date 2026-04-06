@@ -13,7 +13,6 @@ import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
  * and maps raw {@code dmidecode} output to objects or lists of {@link DMIProcessor}.
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIProcessorMapper implements CommonDMIMapper<DMIProcessor> {
 }

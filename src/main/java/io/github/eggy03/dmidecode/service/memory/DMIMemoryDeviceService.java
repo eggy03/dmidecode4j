@@ -5,12 +5,13 @@
  */
 package io.github.eggy03.dmidecode.service.memory;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.memory.DMIMemoryDevice;
 import io.github.eggy03.dmidecode.mapper.physicalmemory.DMIMemoryDeviceMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -28,7 +29,6 @@ import java.util.List;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemoryDevice> {
 
@@ -42,16 +42,14 @@ public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemo
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMIMemoryDevice} objects representing
-     *         the system memory device entries.
-     *         Returns an empty list if no memory device entries are detected.
-     *
+     * the system memory device entries.
+     * Returns an empty list if no memory device entries are detected.
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public List<DMIMemoryDevice> get(long timeout) {
+    public @Unmodifiable @NonNull List<DMIMemoryDevice> get(long timeout) {
         return new DMIMemoryDeviceMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.MEMORY_DEVICE.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.MEMORY_DEVICE), timeout),
                 DMIMemoryDevice.class
         );
     }

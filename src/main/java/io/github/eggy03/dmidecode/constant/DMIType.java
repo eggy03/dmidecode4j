@@ -5,9 +5,6 @@
  */
 package io.github.eggy03.dmidecode.constant;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 /**
  * Enumeration of DMI types as defined by the
  * {@code dmidecode} specification.
@@ -19,14 +16,11 @@ import lombok.RequiredArgsConstructor;
  * <h2>Usage example</h2>
  * <pre>{@code
  * // Build a dmidecode command for querying baseboard information
- * String command = DMIType.getCommand(DMIType.BASEBOARD.getValue());
+ * String command = DMIType.getCommandFor(DMIType.BASEBOARD);
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
-@RequiredArgsConstructor
-@Getter
 public enum DMIType {
 
     BIOS(0),
@@ -71,10 +65,14 @@ public enum DMIType {
     POWER_SUPPLY(39),
     ADDITIONAL_INFORMATION(40),
     ONBOARD_DEVICE(41);
-    
+
     private final int value;
 
-    public static String getCommand(int dmiType){
-        return "sudo /usr/sbin/dmidecode --type "+dmiType;
+    DMIType(int value) {
+        this.value = value;
+    }
+
+    public static String getCommandFor(DMIType type) {
+        return "sudo /usr/sbin/dmidecode --type " + type.value;
     }
 }

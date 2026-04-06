@@ -59,7 +59,7 @@ class DMIProcessorServiceTest {
                 "\t\tHardware Thread"
         );
 
-        mockDMIClass = DMIProcessor.builder()
+        mockDMIClass = new DMIProcessor.Builder()
                 .socketDesignation("CPU0")
                 .type("Central Processor")
                 .family("Core i7")

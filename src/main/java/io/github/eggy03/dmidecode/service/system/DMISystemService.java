@@ -5,12 +5,13 @@
  */
 package io.github.eggy03.dmidecode.service.system;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.system.DMISystem;
 import io.github.eggy03.dmidecode.mapper.system.DMISystemMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -28,7 +29,6 @@ import java.util.Optional;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMISystemService implements OptionalCommonDMIServiceInterface<DMISystem> {
 
@@ -42,16 +42,14 @@ public class DMISystemService implements OptionalCommonDMIServiceInterface<DMISy
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return an {@link Optional} containing {@link DMISystem} information
-     *         if present, or {@link Optional#empty()} if no system entry
-     *         is detected
-     *
+     * if present, or {@link Optional#empty()} if no system entry
+     * is detected
      * @since 0.1.0
      */
     @Override
-    @NotNull
-    public Optional<DMISystem> get(long timeout) {
+    public @Unmodifiable @NonNull Optional<DMISystem> get(long timeout) {
         return new DMISystemMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.SYSTEM.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.SYSTEM), timeout),
                 DMISystem.class
         );
     }

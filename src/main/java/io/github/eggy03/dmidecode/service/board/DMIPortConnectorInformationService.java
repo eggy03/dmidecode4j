@@ -5,11 +5,16 @@
  */
 package io.github.eggy03.dmidecode.service.board;
 
+import io.github.eggy03.dmidecode.annotation.Unmodifiable;
+import io.github.eggy03.dmidecode.annotation.fragility.InvokesFragileMethod;
+import io.github.eggy03.dmidecode.annotation.fragility.MethodType;
 import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.board.DMIPortConnectorInformation;
+import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIPortConnectionInformationMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -27,7 +32,6 @@ import java.util.List;
  * }</pre>
  *
  * @since 0.1.0
- * @author Sayan Bhattacharya
  */
 public class DMIPortConnectorInformationService implements CommonDMIServiceInterface<DMIPortConnectorInformation> {
 
@@ -41,15 +45,15 @@ public class DMIPortConnectorInformationService implements CommonDMIServiceInter
      * @param timeout the maximum time (in seconds) to wait for the {@code dmidecode}
      *                command to complete before terminating the process
      * @return a list of {@link DMIPortConnectorInformation} objects representing
-     *         the system port connector entries.
-     *         Returns an empty list if no port connector entries are detected.
-     *
+     * the system port connector entries.
+     * Returns an empty list if no port connector entries are detected.
      * @since 0.1.0
      */
     @Override
-    public List<DMIPortConnectorInformation> get(long timeout) {
+    @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
+    public @Unmodifiable @NonNull List<DMIPortConnectorInformation> get(long timeout) {
         return new DMIPortConnectionInformationMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommand(DMIType.PORT_CONNECTOR.getValue()), timeout),
+                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PORT_CONNECTOR), timeout),
                 DMIPortConnectorInformation.class
         );
     }
