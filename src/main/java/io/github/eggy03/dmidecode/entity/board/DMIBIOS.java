@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
@@ -24,25 +26,14 @@ import java.util.List;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIBIOS bios = new DMIBIOS.Builder()
- *     .vendor("American Megatrends Inc.")
- *     .version("F10")
- *     .releaseDate("07/15/2023")
- *     .build();
- *
- * // Create a modified copy
- * DMIBIOS updated = bios
- *     .withVersion("F11");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIBIOS {
+@JsonSerialize(as = ImmutableDMIBIOS.class)
+@JsonDeserialize(as = ImmutableDMIBIOS.class)
+public abstract class DMIBIOS {
 
     @JsonProperty("Vendor")
     @Nullable
@@ -80,8 +71,7 @@ public abstract class AbstractDMIBIOS {
     @Nullable
     public abstract String firmwareRevision();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

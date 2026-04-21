@@ -89,8 +89,7 @@ public interface CommonDMIMapper<S> {
     @FragileMethod(
             type = MethodType.INTERFACE_DEFAULT_METHOD,
             reason = "Parsing formatted human readable dmidecode output is always error-prone and subject to change without notice",
-            requiresReplacement = true,
-            replacementNote = "Consider using --json flag of dmidecode if available"
+            requiresReplacement = true
     )
     default @NonNull Optional<S> mapToEntity(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 
@@ -191,8 +190,7 @@ public interface CommonDMIMapper<S> {
     @FragileMethod(
             type = MethodType.INTERFACE_DEFAULT_METHOD,
             reason = "Parsing formatted human readable dmidecode output is always error-prone and subject to change without notice",
-            requiresReplacement = true,
-            replacementNote = "Consider using --json flag of dmidecode if available"
+            requiresReplacement = true
     )
     default @NonNull @Unmodifiable List<S> mapToList(@Nullable String rawDMIData, @NonNull Class<S> mappableEntityClass) {
 

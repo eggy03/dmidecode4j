@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.processor;
 
 import io.github.eggy03.dmidecode.entity.processor.DMICache;
+import io.github.eggy03.dmidecode.entity.processor.ImmutableDMICache;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ class DMICacheServiceTest {
                 "\tAssociativity: 16-way Set-Associative"
         );
 
-        mockDMIClass = new DMICache.Builder()
+        mockDMIClass = new ImmutableDMICache.Builder()
                 .socketDesignation("L3-Cache")
                 .configuration("Enabled, Not Socketed, Level 3")
                 .operationalMode("Write Back")

@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.entity.board.DMIBIOSLanguage;
+import io.github.eggy03.dmidecode.entity.board.ImmutableDMIBIOSLanguage;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class DMIBIOSLanguageServiceTest {
                 "\tCurrently Installed Language: en|US"
         );
 
-        mockDMIClass = new DMIBIOSLanguage.Builder()
+        mockDMIClass = new ImmutableDMIBIOSLanguage.Builder()
                 .installableLanguages(Arrays.asList(
                         "en|US",
                         "fr|FR",
@@ -65,7 +66,7 @@ class DMIBIOSLanguageServiceTest {
                     .when(() -> TerminalUtility.executeCommand(anyString(), anyLong()))
                     .thenReturn("invalid output");
 
-            assertThat(service.get(15)).contains(new DMIBIOSLanguage.Builder().build());
+            assertThat(service.get(15)).contains(new ImmutableDMIBIOSLanguage.Builder().build());
         }
     }
 }

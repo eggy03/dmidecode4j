@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.peripheral;
 
 import io.github.eggy03.dmidecode.entity.peripheral.DMIPortableBattery;
+import io.github.eggy03.dmidecode.entity.peripheral.ImmutableDMIPortableBattery;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class DMIPortableBatteryServiceTest {
                 "\tOEM-specific Information: None"
         );
 
-        mockDMIClass = new DMIPortableBattery.Builder()
+        mockDMIClass = new ImmutableDMIPortableBattery.Builder()
                 .location("Internal Battery")
                 .manufacturer("LG")
                 .name("BAT0")

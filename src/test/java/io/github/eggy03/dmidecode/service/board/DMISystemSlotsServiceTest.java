@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.entity.board.DMISystemSlots;
+import io.github.eggy03.dmidecode.entity.board.ImmutableDMISystemSlots;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class DMISystemSlotsServiceTest {
                 "\tBus Address: 0000:01:00.0"
         );
 
-        mockDMIClass = new DMISystemSlots.Builder()
+        mockDMIClass = new ImmutableDMISystemSlots.Builder()
                 .designation("PCIEX16")
                 .type("PCI Express")
                 .currentUsage("In Use")

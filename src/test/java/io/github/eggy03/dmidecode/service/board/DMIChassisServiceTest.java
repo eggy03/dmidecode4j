@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.entity.board.DMIChassis;
+import io.github.eggy03.dmidecode.entity.board.ImmutableDMIChassis;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class DMIChassisServiceTest {
                 "\tSKU Number: SKU-001"
         );
 
-        mockDMIClass = new DMIChassis.Builder()
+        mockDMIClass = new ImmutableDMIChassis.Builder()
                 .manufacturer("Dell Inc.")
                 .type("Desktop")
                 .lock("Not Present")
@@ -82,7 +83,7 @@ class DMIChassisServiceTest {
                     .when(() -> TerminalUtility.executeCommand(anyString(), anyLong()))
                     .thenReturn("invalid output");
 
-            assertThat(service.get(15)).contains(new DMIChassis.Builder().build());
+            assertThat(service.get(15)).contains(new ImmutableDMIChassis.Builder().build());
         }
     }
 }

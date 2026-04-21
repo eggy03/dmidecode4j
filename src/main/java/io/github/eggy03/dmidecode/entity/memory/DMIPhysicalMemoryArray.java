@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Immutable representation of physical memory array information retrieved via DMI.
@@ -22,26 +24,14 @@ import tools.jackson.databind.ObjectMapper;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIPhysicalMemoryArray array = new DMIPhysicalMemoryArray.Builder()
- *     .location("System Board Or Motherboard")
- *     .use("System Memory")
- *     .maximumCapacity("128 GB")
- *     .numberOfDevices(4)
- *     .build();
- *
- * // Create a modified copy
- * DMIPhysicalMemoryArray updated = array
- *     .withErrorCorrectionType("Multi-bit ECC");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIPhysicalMemoryArray {
+@JsonSerialize(as = ImmutableDMIPhysicalMemoryArray.class)
+@JsonDeserialize(as = ImmutableDMIPhysicalMemoryArray.class)
+public abstract class DMIPhysicalMemoryArray {
 
     @JsonProperty("Location")
     @Nullable
@@ -67,8 +57,7 @@ public abstract class AbstractDMIPhysicalMemoryArray {
     @Nullable
     public abstract Integer numberOfDevices();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

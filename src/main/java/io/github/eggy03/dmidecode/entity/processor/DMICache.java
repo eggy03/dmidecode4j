@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
@@ -24,26 +26,14 @@ import java.util.List;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMICache cache = new DMICache.Builder()
- *     .socketDesignation("L3-Cache")
- *     .location("Internal")
- *     .installedSize("32 MB")
- *     .associativity("16-way Set-Associative")
- *     .build();
- *
- * // Create a modified copy
- * DMICache updated = cache
- *     .withInstalledSize("64 MB");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMICache {
+@JsonSerialize(as = ImmutableDMICache.class)
+@JsonDeserialize(as = ImmutableDMICache.class)
+public abstract class DMICache {
 
     @JsonProperty("Socket Designation")
     @Nullable
@@ -93,8 +83,7 @@ public abstract class AbstractDMICache {
     @Nullable
     public abstract String associativity();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

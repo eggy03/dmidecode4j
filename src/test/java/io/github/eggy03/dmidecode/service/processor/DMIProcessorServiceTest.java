@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.processor;
 
 import io.github.eggy03.dmidecode.entity.processor.DMIProcessor;
+import io.github.eggy03.dmidecode.entity.processor.ImmutableDMIProcessor;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ class DMIProcessorServiceTest {
                 "\t\tHardware Thread"
         );
 
-        mockDMIClass = new DMIProcessor.Builder()
+        mockDMIClass = new ImmutableDMIProcessor.Builder()
                 .socketDesignation("CPU0")
                 .type("Central Processor")
                 .family("Core i7")

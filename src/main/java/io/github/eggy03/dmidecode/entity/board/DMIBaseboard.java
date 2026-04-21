@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
@@ -24,26 +26,14 @@ import java.util.List;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIBaseboard board = new DMIBaseboard.Builder()
- *     .manufacturer("ASUSTeK COMPUTER INC.")
- *     .productName("PRIME B550M-A")
- *     .serialNumber("ABC123456")
- *     .build();
- *
- * // Create a modified copy
- * DMIBaseboard updated = board
- *     .withSerialNumber("XYZ987654")
- *     .withProductName("PRIME A320");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIBaseboard {
+@JsonSerialize(as = ImmutableDMIBaseboard.class)
+@JsonDeserialize(as = ImmutableDMIBaseboard.class)
+public abstract class DMIBaseboard {
 
     @JsonProperty("Manufacturer")
     @Nullable
@@ -85,8 +75,7 @@ public abstract class AbstractDMIBaseboard {
     @Nullable
     public abstract Integer containedObjectHandles();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

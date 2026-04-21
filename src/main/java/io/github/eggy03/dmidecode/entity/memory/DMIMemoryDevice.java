@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Immutable representation of memory device information retrieved via DMI.
@@ -22,27 +24,14 @@ import tools.jackson.databind.ObjectMapper;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIMemoryDevice memory = new DMIMemoryDevice.Builder()
- *     .locator("DIMM_A1")
- *     .size("16 GB")
- *     .type("DDR4")
- *     .speed("3200 MT/s")
- *     .manufacturer("Samsung")
- *     .build();
- *
- * // Create a modified copy
- * DMIMemoryDevice updated = memory
- *     .withConfiguredMemorySpeed("2933 MT/s");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIMemoryDevice {
+@JsonSerialize(as = ImmutableDMIMemoryDevice.class)
+@JsonDeserialize(as = ImmutableDMIMemoryDevice.class)
+public abstract class DMIMemoryDevice {
 
     @JsonProperty("Array Handle")
     @Nullable
@@ -172,8 +161,7 @@ public abstract class AbstractDMIMemoryDevice {
     @Nullable
     public abstract String logicalSize();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

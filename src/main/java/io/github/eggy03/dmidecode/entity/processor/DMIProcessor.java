@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
@@ -24,28 +26,14 @@ import java.util.List;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIProcessor processor = new DMIProcessor.Builder()
- *     .socketDesignation("CPU0")
- *     .manufacturer("Intel")
- *     .version("Intel(R) Core(TM) i7-12700H")
- *     .coreCount(14)
- *     .threadCount(20)
- *     .currentSpeed("2700 MHz")
- *     .build();
- *
- * // Create a modified copy
- * DMIProcessor updated = processor
- *     .withCurrentSpeed("3900 MHz");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIProcessor {
+@JsonSerialize(as = ImmutableDMIProcessor.class)
+@JsonDeserialize(as = ImmutableDMIProcessor.class)
+public abstract class DMIProcessor {
 
     @JsonProperty("Socket Designation")
     @Nullable
@@ -143,8 +131,7 @@ public abstract class AbstractDMIProcessor {
     @Nullable
     public abstract List<@Nullable String> characteristics();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

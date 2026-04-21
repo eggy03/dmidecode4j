@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.memory;
 
 import io.github.eggy03.dmidecode.entity.memory.DMIPhysicalMemoryArray;
+import io.github.eggy03.dmidecode.entity.memory.ImmutableDMIPhysicalMemoryArray;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class DMIPhysicalMemoryArrayServiceTest {
                 "\tNumber Of Devices: 4"
         );
 
-        mockDMIClass = new DMIPhysicalMemoryArray.Builder()
+        mockDMIClass = new ImmutableDMIPhysicalMemoryArray.Builder()
                 .location("System Board Or Motherboard")
                 .use("System Memory")
                 .errorCorrectionType("Multi-bit ECC")
@@ -65,7 +66,7 @@ class DMIPhysicalMemoryArrayServiceTest {
                     .thenReturn("invalid output");
 
             assertThat(service.get(15))
-                    .contains(new DMIPhysicalMemoryArray.Builder().build());
+                    .contains(new ImmutableDMIPhysicalMemoryArray.Builder().build());
         }
     }
 }

@@ -2,6 +2,7 @@ package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.entity.board.DMIPortConnectorInformation;
 
+import io.github.eggy03.dmidecode.entity.board.ImmutableDMIPortConnectorInformation;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class DMIPortConnectorInformationServiceTest {
                 "\tPort Type: USB"
         );
 
-        mockDMIClass = new DMIPortConnectorInformation.Builder()
+        mockDMIClass = new ImmutableDMIPortConnectorInformation.Builder()
                 .externalReferenceDesignator("USB1")
                 .internalReferenceDesignator("JUSB1")
                 .externalConnectorType("USB")

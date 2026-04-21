@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
@@ -24,24 +26,14 @@ import java.util.List;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIBIOSLanguage language = new DMIBIOSLanguage.Builder()
- *     .installableLanguages(List.of("en|US", "fr|FR"))
- *     .currentLanguage("en|US")
- *     .build();
- *
- * // Create a modified copy
- * DMIBIOSLanguage updated = language
- *     .withCurrentLanguage("fr|FR");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIBIOSLanguage {
+@JsonSerialize(as = ImmutableDMIBIOSLanguage.class)
+@JsonDeserialize(as = ImmutableDMIBIOSLanguage.class)
+public abstract class DMIBIOSLanguage {
 
     @JsonProperty("Installable Languages")
     @Nullable
@@ -51,8 +43,7 @@ public abstract class AbstractDMIBIOSLanguage {
     @Nullable
     public abstract String currentLanguage();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

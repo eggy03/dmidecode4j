@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Immutable representation of portable battery information retrieved via DMI.
@@ -22,26 +24,14 @@ import tools.jackson.databind.ObjectMapper;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIPortableBattery battery = new DMIPortableBattery.Builder()
- *     .location("Internal Battery")
- *     .manufacturer("LG")
- *     .designCapacity("50000 mWh")
- *     .designVoltage("11.4 V")
- *     .build();
- *
- * // Create a modified copy
- * DMIPortableBattery updated = battery
- *     .withMaximumError("2%");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIPortableBattery {
+@JsonSerialize(as = ImmutableDMIPortableBattery.class)
+@JsonDeserialize(as = ImmutableDMIPortableBattery.class)
+public abstract class DMIPortableBattery {
 
     @JsonProperty("Location")
     @Nullable
@@ -87,8 +77,7 @@ public abstract class AbstractDMIPortableBattery {
     @Nullable
     public abstract String oemSpecificInformation();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);
