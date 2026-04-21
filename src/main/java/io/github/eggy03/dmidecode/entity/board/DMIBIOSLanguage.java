@@ -43,8 +43,7 @@ public abstract class DMIBIOSLanguage {
     @Nullable
     public abstract String currentLanguage();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

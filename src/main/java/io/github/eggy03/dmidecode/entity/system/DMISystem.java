@@ -65,8 +65,7 @@ public abstract class DMISystem {
     @Nullable
     public abstract String family();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

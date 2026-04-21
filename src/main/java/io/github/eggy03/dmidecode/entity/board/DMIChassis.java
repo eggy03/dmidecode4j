@@ -93,8 +93,7 @@ public abstract class DMIChassis {
     @Nullable
     public abstract String skuNumber();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

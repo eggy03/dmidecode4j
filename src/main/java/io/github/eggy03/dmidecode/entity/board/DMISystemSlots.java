@@ -63,8 +63,7 @@ public abstract class DMISystemSlots {
     @Nullable
     public abstract String busAddress();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

@@ -75,8 +75,7 @@ public abstract class DMIBaseboard {
     @Nullable
     public abstract Integer containedObjectHandles();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

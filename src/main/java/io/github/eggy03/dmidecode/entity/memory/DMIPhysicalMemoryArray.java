@@ -57,8 +57,7 @@ public abstract class DMIPhysicalMemoryArray {
     @Nullable
     public abstract Integer numberOfDevices();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

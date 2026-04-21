@@ -131,8 +131,7 @@ public abstract class DMIProcessor {
     @Nullable
     public abstract List<@Nullable String> characteristics();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

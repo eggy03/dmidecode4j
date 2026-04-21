@@ -161,8 +161,7 @@ public abstract class DMIMemoryDevice {
     @Nullable
     public abstract String logicalSize();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

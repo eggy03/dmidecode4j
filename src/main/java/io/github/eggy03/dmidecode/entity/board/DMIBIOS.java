@@ -71,8 +71,7 @@ public abstract class DMIBIOS {
     @Nullable
     public abstract String firmwareRevision();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

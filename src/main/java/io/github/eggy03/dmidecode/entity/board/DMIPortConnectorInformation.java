@@ -53,8 +53,7 @@ public abstract class DMIPortConnectorInformation {
     @Nullable
     public abstract String portType();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

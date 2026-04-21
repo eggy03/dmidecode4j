@@ -77,8 +77,7 @@ public abstract class DMIPortableBattery {
     @Nullable
     public abstract String oemSpecificInformation();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);

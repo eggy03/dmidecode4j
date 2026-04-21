@@ -83,8 +83,7 @@ public abstract class DMICache {
     @Nullable
     public abstract String associativity();
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(this);
