@@ -12,9 +12,11 @@ import io.github.eggy03.dmidecode.entity.board.DMIBaseboard;
 import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIBaseboardMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
-import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import io.github.eggy03.dmidecode.terminal.TerminalResult;
+import io.github.eggy03.dmidecode.terminal.TerminalService;
 import org.jspecify.annotations.NonNull;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,6 +37,30 @@ import java.util.Optional;
  */
 public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DMIBaseboard> {
 
+    private final TerminalService terminalService;
+    private final DMIBaseboardMapper mapper;
+
+    /**
+     * Creates {@link DMIBaseboardService} with default configuration.
+     *
+     * @since 0.3.0
+     */
+    public DMIBaseboardService() {
+        this(new TerminalService(), new DMIBaseboardMapper());
+    }
+
+    /**
+     * Package Private constructor with injectable dependencies
+     *
+     * @param terminalService the {@link TerminalService} instance to use, must not be {@code null}
+     * @param mapper          the mapper instance to use, must not be {@code null}
+     * @since 0.3.0
+     */
+    DMIBaseboardService(@NonNull TerminalService terminalService, @NonNull DMIBaseboardMapper mapper) {
+        this.terminalService = Objects.requireNonNull(terminalService, "terminalService cannot be null");
+        this.mapper = Objects.requireNonNull(mapper, "mapper cannot be null");
+    }
+
     /**
      * Retrieves baseboard information present in the system
      * using an isolated {@code dmidecode} process with a configurable timeout.
@@ -51,9 +77,8 @@ public class DMIBaseboardService implements OptionalCommonDMIServiceInterface<DM
     @Override
     @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
     public @NonNull Optional<DMIBaseboard> get(long timeout) {
-        return new DMIBaseboardMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.BASEBOARD), timeout),
-                DMIBaseboard.class
-        );
+
+        TerminalResult result = terminalService.executeCommand(DMIType.BASEBOARD, timeout);
+        return mapper.mapToEntity(result.getResult(), DMIBaseboard.class);
     }
 }

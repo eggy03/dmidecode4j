@@ -9,9 +9,11 @@ import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.memory.DMIPhysicalMemoryArray;
 import io.github.eggy03.dmidecode.mapper.physicalmemory.DMIPhysicalMemoryArrayMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
-import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import io.github.eggy03.dmidecode.terminal.TerminalResult;
+import io.github.eggy03.dmidecode.terminal.TerminalService;
 import org.jspecify.annotations.NonNull;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -31,6 +33,30 @@ import java.util.Optional;
  */
 public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceInterface<DMIPhysicalMemoryArray> {
 
+    private final TerminalService terminalService;
+    private final DMIPhysicalMemoryArrayMapper mapper;
+
+    /**
+     * Creates {@link DMIPhysicalMemoryArrayService} with default configuration.
+     *
+     * @since 0.3.0
+     */
+    public DMIPhysicalMemoryArrayService() {
+        this(new TerminalService(), new DMIPhysicalMemoryArrayMapper());
+    }
+
+    /**
+     * Package Private constructor with injectable dependencies
+     *
+     * @param terminalService the {@link TerminalService} instance to use, must not be {@code null}
+     * @param mapper          the mapper instance to use, must not be {@code null}
+     * @since 0.3.0
+     */
+    DMIPhysicalMemoryArrayService(@NonNull TerminalService terminalService, @NonNull DMIPhysicalMemoryArrayMapper mapper) {
+        this.terminalService = Objects.requireNonNull(terminalService, "terminalService cannot be null");
+        this.mapper = Objects.requireNonNull(mapper, "mapper cannot be null");
+    }
+
     /**
      * Retrieves physical memory array information present in the system
      * using an isolated {@code dmidecode} process with a configurable timeout.
@@ -47,9 +73,8 @@ public class DMIPhysicalMemoryArrayService implements OptionalCommonDMIServiceIn
      */
     @Override
     public @NonNull Optional<DMIPhysicalMemoryArray> get(long timeout) {
-        return new DMIPhysicalMemoryArrayMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PHYSICAL_MEMORY_ARRAY), timeout),
-                DMIPhysicalMemoryArray.class
-        );
+
+        TerminalResult result = terminalService.executeCommand(DMIType.PHYSICAL_MEMORY_ARRAY, timeout);
+        return mapper.mapToEntity(result.getResult(), DMIPhysicalMemoryArray.class);
     }
 }

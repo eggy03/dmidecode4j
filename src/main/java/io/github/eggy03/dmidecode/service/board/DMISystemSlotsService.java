@@ -13,10 +13,12 @@ import io.github.eggy03.dmidecode.entity.board.DMISystemSlots;
 import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMISystemSlotsMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
-import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import io.github.eggy03.dmidecode.terminal.TerminalResult;
+import io.github.eggy03.dmidecode.terminal.TerminalService;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Service class for fetching system slot information from the system.
@@ -35,6 +37,30 @@ import java.util.List;
  */
 public class DMISystemSlotsService implements CommonDMIServiceInterface<DMISystemSlots> {
 
+    private final TerminalService terminalService;
+    private final DMISystemSlotsMapper mapper;
+
+    /**
+     * Creates {@link DMISystemSlotsService} with default configuration.
+     *
+     * @since 0.3.0
+     */
+    public DMISystemSlotsService() {
+        this(new TerminalService(), new DMISystemSlotsMapper());
+    }
+
+    /**
+     * Package Private constructor with injectable dependencies
+     *
+     * @param terminalService the {@link TerminalService} instance to use, must not be {@code null}
+     * @param mapper          the mapper instance to use, must not be {@code null}
+     * @since 0.3.0
+     */
+    DMISystemSlotsService(@NonNull TerminalService terminalService, @NonNull DMISystemSlotsMapper mapper) {
+        this.terminalService = Objects.requireNonNull(terminalService, "terminalService cannot be null");
+        this.mapper = Objects.requireNonNull(mapper, "mapper cannot be null");
+    }
+
     /**
      * Retrieves system slot entries present in the system
      * using an isolated {@code dmidecode} process with a configurable timeout.
@@ -52,9 +78,8 @@ public class DMISystemSlotsService implements CommonDMIServiceInterface<DMISyste
     @Override
     @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
     public @Unmodifiable @NonNull List<DMISystemSlots> get(long timeout) {
-        return new DMISystemSlotsMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.SYSTEM_SLOTS), timeout),
-                DMISystemSlots.class
-        );
+
+        TerminalResult result = terminalService.executeCommand(DMIType.SYSTEM_SLOTS, timeout);
+        return mapper.mapToList(result.getResult(), DMISystemSlots.class);
     }
 }

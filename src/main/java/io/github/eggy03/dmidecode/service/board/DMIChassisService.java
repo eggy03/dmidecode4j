@@ -12,9 +12,11 @@ import io.github.eggy03.dmidecode.entity.board.DMIChassis;
 import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIChassisMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
-import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import io.github.eggy03.dmidecode.terminal.TerminalResult;
+import io.github.eggy03.dmidecode.terminal.TerminalService;
 import org.jspecify.annotations.NonNull;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,6 +36,30 @@ import java.util.Optional;
  */
 public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIChassis> {
 
+    private final TerminalService terminalService;
+    private final DMIChassisMapper mapper;
+
+    /**
+     * Creates {@link DMIChassisService} with default configuration.
+     *
+     * @since 0.3.0
+     */
+    public DMIChassisService() {
+        this(new TerminalService(), new DMIChassisMapper());
+    }
+
+    /**
+     * Package Private constructor with injectable dependencies
+     *
+     * @param terminalService the {@link TerminalService} instance to use, must not be {@code null}
+     * @param mapper          the mapper instance to use, must not be {@code null}
+     * @since 0.3.0
+     */
+    DMIChassisService(@NonNull TerminalService terminalService, @NonNull DMIChassisMapper mapper) {
+        this.terminalService = Objects.requireNonNull(terminalService, "terminalService cannot be null");
+        this.mapper = Objects.requireNonNull(mapper, "mapper cannot be null");
+    }
+
     /**
      * Retrieves chassis information present in the system
      * using an isolated {@code dmidecode} process with a configurable timeout.
@@ -50,9 +76,8 @@ public class DMIChassisService implements OptionalCommonDMIServiceInterface<DMIC
     @Override
     @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
     public @NonNull Optional<DMIChassis> get(long timeout) {
-        return new DMIChassisMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.CHASSIS), timeout),
-                DMIChassis.class
-        );
+
+        TerminalResult result = terminalService.executeCommand(DMIType.CHASSIS, timeout);
+        return mapper.mapToEntity(result.getResult(), DMIChassis.class);
     }
 }
