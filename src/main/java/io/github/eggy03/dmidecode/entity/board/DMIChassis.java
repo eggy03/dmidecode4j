@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Immutable representation of system chassis information retrieved via DMI.
@@ -22,25 +24,14 @@ import tools.jackson.databind.ObjectMapper;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIChassis chassis = new DMIChassis.Builder()
- *     .manufacturer("Dell Inc.")
- *     .type("Desktop")
- *     .serialNumber("ABC123456")
- *     .build();
- *
- * // Create a modified copy
- * DMIChassis updated = chassis
- *     .withAssetTag("OFFICE-PC-01");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIChassis {
+@JsonSerialize(as = ImmutableDMIChassis.class)
+@JsonDeserialize(as = ImmutableDMIChassis.class)
+public abstract class DMIChassis {
 
     @JsonProperty("Manufacturer")
     @Nullable

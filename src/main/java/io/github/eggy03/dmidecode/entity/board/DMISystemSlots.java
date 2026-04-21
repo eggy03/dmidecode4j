@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
@@ -24,26 +26,14 @@ import java.util.List;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMISystemSlots slot = new DMISystemSlots.Builder()
- *     .designation("PCIEX16")
- *     .type("PCI Express")
- *     .currentUsage("In Use")
- *     .busAddress("0000:01:00.0")
- *     .build();
- *
- * // Create a modified copy
- * DMISystemSlots updated = slot
- *     .withCurrentUsage("Available");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMISystemSlots {
+@JsonSerialize(as = ImmutableDMISystemSlots.class)
+@JsonDeserialize(as = ImmutableDMISystemSlots.class)
+public abstract class DMISystemSlots {
 
     @JsonProperty("Designation")
     @Nullable

@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Immutable representation of port connector information retrieved via DMI.
@@ -22,25 +24,14 @@ import tools.jackson.databind.ObjectMapper;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMIPortConnectorInformation port = new DMIPortConnectorInformation.Builder()
- *     .externalReferenceDesignator("USB1")
- *     .externalConnectorType("USB")
- *     .portType("USB")
- *     .build();
- *
- * // Create a modified copy
- * DMIPortConnectorInformation updated = port
- *     .withPortType("USB Type-C");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMIPortConnectorInformation {
+@JsonSerialize(as = ImmutableDMIPortConnectorInformation.class)
+@JsonDeserialize(as = ImmutableDMIPortConnectorInformation.class)
+public abstract class DMIPortConnectorInformation {
 
     @JsonProperty("External Reference Designator")
     @Nullable

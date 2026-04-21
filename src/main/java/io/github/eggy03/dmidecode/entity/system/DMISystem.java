@@ -11,6 +11,8 @@ import org.immutables.value.Value;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Immutable representation of system information retrieved via DMI.
@@ -22,26 +24,14 @@ import tools.jackson.databind.ObjectMapper;
  * Instances of this class are thread-safe.
  * </p>
  *
- * <h2>Usage example</h2>
- * <pre>{@code
- * DMISystem system = new DMISystem.Builder()
- *     .manufacturer("LENOVO")
- *     .productName("ThinkPad T14 Gen 3")
- *     .serialNumber("PF123ABC")
- *     .uuid("4C4C4544-0038-4D10-8051-CAC04F4A1234")
- *     .build();
- *
- * // Create a modified copy
- * DMISystem updated = system
- *     .withSkuNumber("21CFCTO1WW");
- * }</pre>
- *
  * @since 0.2.0
  */
 @Value.Immutable
 @ImmutableEntityStyle
 @NullMarked
-public abstract class AbstractDMISystem {
+@JsonSerialize(as = ImmutableDMISystem.class)
+@JsonDeserialize(as = ImmutableDMISystem.class)
+public abstract class DMISystem {
 
     @JsonProperty("Manufacturer")
     @Nullable
