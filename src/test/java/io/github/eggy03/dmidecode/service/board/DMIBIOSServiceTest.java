@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.entity.board.DMIBIOS;
+import io.github.eggy03.dmidecode.entity.board.ImmutableDMIBIOS;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class DMIBIOSServiceTest {
                 "\tFirmware Revision: 1.12"
         );
 
-        mockDMIClass = new DMIBIOS.Builder()
+        mockDMIClass = new ImmutableDMIBIOS.Builder()
                 .vendor("American Megatrends Inc.")
                 .version("F10")
                 .releaseDate("07/15/2023")

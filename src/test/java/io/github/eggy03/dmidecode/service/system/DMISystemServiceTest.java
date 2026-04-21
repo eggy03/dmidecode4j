@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.system;
 
 import io.github.eggy03.dmidecode.entity.system.DMISystem;
+import io.github.eggy03.dmidecode.entity.system.ImmutableDMISystem;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class DMISystemServiceTest {
                 "\tFamily: ThinkPad"
         );
 
-        mockDMIClass = new DMISystem.Builder()
+        mockDMIClass = new ImmutableDMISystem.Builder()
                 .manufacturer("LENOVO")
                 .productName("ThinkPad T14 Gen 3")
                 .version("ThinkPad T14 Gen 3")
@@ -68,7 +69,7 @@ class DMISystemServiceTest {
                     .when(() -> TerminalUtility.executeCommand(anyString(), anyLong()))
                     .thenReturn("invalid output");
 
-            assertThat(service.get(15)).contains(new DMISystem.Builder().build());
+            assertThat(service.get(15)).contains(new ImmutableDMISystem.Builder().build());
         }
     }
 }

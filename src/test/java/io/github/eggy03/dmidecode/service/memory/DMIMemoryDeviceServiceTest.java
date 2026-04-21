@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.memory;
 
 import io.github.eggy03.dmidecode.entity.memory.DMIMemoryDevice;
+import io.github.eggy03.dmidecode.entity.memory.ImmutableDMIMemoryDevice;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ class DMIMemoryDeviceServiceTest {
                 "\tConfigured Voltage: 1.2 V"
         );
 
-        mockDMIClass = new DMIMemoryDevice.Builder()
+        mockDMIClass = new ImmutableDMIMemoryDevice.Builder()
                 .arrayHandle("0x002C")
                 .errorInformationHandle("0x002D")
                 .totalWidth("64 bits")

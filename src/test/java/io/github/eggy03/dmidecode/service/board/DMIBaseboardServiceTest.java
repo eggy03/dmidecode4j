@@ -1,6 +1,7 @@
 package io.github.eggy03.dmidecode.service.board;
 
 import io.github.eggy03.dmidecode.entity.board.DMIBaseboard;
+import io.github.eggy03.dmidecode.entity.board.ImmutableDMIBaseboard;
 import io.github.eggy03.dmidecode.utility.TerminalUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class DMIBaseboardServiceTest {
                 );
 
 
-        mockDMIClass = new DMIBaseboard.Builder()
+        mockDMIClass = new ImmutableDMIBaseboard.Builder()
                 .manufacturer("ASUSTeK COMPUTER INC.")
                 .productName("PRIME B550M-A")
                 .version("Rev X.0x")
@@ -84,7 +85,7 @@ class DMIBaseboardServiceTest {
                     .thenReturn("invalid output");
 
 
-            assertThat(service.get(15)).contains(new DMIBaseboard.Builder().build());
+            assertThat(service.get(15)).contains(new ImmutableDMIBaseboard.Builder().build());
 
         }
     }
