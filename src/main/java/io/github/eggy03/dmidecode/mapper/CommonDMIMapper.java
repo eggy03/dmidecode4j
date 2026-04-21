@@ -47,7 +47,24 @@ import java.util.Optional;
  */
 public interface CommonDMIMapper<S> {
 
-    ObjectMapper jacksonMapper = new ObjectMapper();
+    /**
+     * Configure the {@link ObjectMapper} to be used for JSON processing.
+     *
+     * <p>
+     * The default implementation returns a new {@link ObjectMapper} instance with default configuration.
+     * </p>
+     *
+     * <p>
+     * Custom implementations may override this method to provide a custom-configured
+     * {@link ObjectMapper}.
+     * </p>
+     *
+     * @return the {@link ObjectMapper} to use
+     * @since 0.3.0
+     */
+    default @NonNull ObjectMapper configureObjectMapper() {
+        return new ObjectMapper();
+    }
 
     /**
      * Maps raw {@code dmidecode} output into a single entity of type {@code <S>}.
@@ -95,6 +112,8 @@ public interface CommonDMIMapper<S> {
 
         if (rawDMIData == null)
             return Optional.empty();
+
+        ObjectMapper jacksonMapper = configureObjectMapper();
 
         Map<String, Object> keyValueMap = new LinkedHashMap<>();
 
@@ -196,6 +215,8 @@ public interface CommonDMIMapper<S> {
 
         if (rawDMIData == null)
             return Collections.emptyList();
+
+        ObjectMapper jacksonMapper = configureObjectMapper();
 
         List<S> entityList = new ArrayList<>();
 
