@@ -10,20 +10,20 @@ package io.github.eggy03.dmidecode.exception;
  *
  * @since 0.1.0
  */
-public class TerminalExecutionException extends RuntimeException {
+public class TerminalIOException extends RuntimeException {
 
     @SuppressWarnings("unused")
-    public TerminalExecutionException(String message, Throwable cause) {
+    public TerminalIOException(String message, Throwable cause) {
         super(message, cause);
     }
 
     @SuppressWarnings("unused")
-    public TerminalExecutionException(String message) {
+    public TerminalIOException(String message) {
         super(message);
     }
 
     @SuppressWarnings("unused")
-    public TerminalExecutionException(Throwable cause) {
+    public TerminalIOException(Throwable cause) {
         super("Terminal Execution Failure", cause);
     }
 
