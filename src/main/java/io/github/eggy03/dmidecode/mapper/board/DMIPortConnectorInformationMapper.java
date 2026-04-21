@@ -14,5 +14,5 @@ import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
  *
  * @since 0.1.0
  */
-public class DMIPortConnectionInformationMapper implements CommonDMIMapper<DMIPortConnectorInformation> {
+public class DMIPortConnectorInformationMapper implements CommonDMIMapper<DMIPortConnectorInformation> {
 }
