@@ -10,10 +10,12 @@ import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.peripheral.DMIPortableBattery;
 import io.github.eggy03.dmidecode.mapper.peripheral.DMIPortableBatteryMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
-import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import io.github.eggy03.dmidecode.terminal.TerminalResult;
+import io.github.eggy03.dmidecode.terminal.TerminalService;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Service class for fetching portable battery information from the system.
@@ -32,6 +34,30 @@ import java.util.List;
  */
 public class DMIPortableBatteryService implements CommonDMIServiceInterface<DMIPortableBattery> {
 
+    private final TerminalService terminalService;
+    private final DMIPortableBatteryMapper mapper;
+
+    /**
+     * Creates {@link DMIPortableBatteryService} with default configuration.
+     *
+     * @since 0.3.0
+     */
+    public DMIPortableBatteryService() {
+        this(new TerminalService(), new DMIPortableBatteryMapper());
+    }
+
+    /**
+     * Package Private constructor with injectable dependencies
+     *
+     * @param terminalService the {@link TerminalService} instance to use, must not be {@code null}
+     * @param mapper          the mapper instance to use, must not be {@code null}
+     * @since 0.3.0
+     */
+    DMIPortableBatteryService(@NonNull TerminalService terminalService, @NonNull DMIPortableBatteryMapper mapper) {
+        this.terminalService = Objects.requireNonNull(terminalService, "terminalService cannot be null");
+        this.mapper = Objects.requireNonNull(mapper, "mapper cannot be null");
+    }
+
     /**
      * Retrieves portable battery entries present in the system
      * using an isolated {@code dmidecode} process with a configurable timeout.
@@ -48,9 +74,8 @@ public class DMIPortableBatteryService implements CommonDMIServiceInterface<DMIP
      */
     @Override
     public @Unmodifiable @NonNull List<DMIPortableBattery> get(long timeout) {
-        return new DMIPortableBatteryMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.PORTABLE_BATTERY), timeout),
-                DMIPortableBattery.class
-        );
+
+        TerminalResult result = terminalService.executeCommand(DMIType.PORTABLE_BATTERY, timeout);
+        return mapper.mapToList(result.getResult(), DMIPortableBattery.class);
     }
 }

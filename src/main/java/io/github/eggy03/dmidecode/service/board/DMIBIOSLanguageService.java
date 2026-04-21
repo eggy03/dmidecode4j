@@ -12,9 +12,11 @@ import io.github.eggy03.dmidecode.entity.board.DMIBIOSLanguage;
 import io.github.eggy03.dmidecode.mapper.CommonDMIMapper;
 import io.github.eggy03.dmidecode.mapper.board.DMIBIOSLanguageMapper;
 import io.github.eggy03.dmidecode.service.OptionalCommonDMIServiceInterface;
-import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import io.github.eggy03.dmidecode.terminal.TerminalResult;
+import io.github.eggy03.dmidecode.terminal.TerminalService;
 import org.jspecify.annotations.NonNull;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,6 +36,30 @@ import java.util.Optional;
  */
 public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface<DMIBIOSLanguage> {
 
+    private final TerminalService terminalService;
+    private final DMIBIOSLanguageMapper mapper;
+
+    /**
+     * Creates {@link DMIBIOSLanguageService} with default configuration.
+     *
+     * @since 0.3.0
+     */
+    public DMIBIOSLanguageService() {
+        this(new TerminalService(), new DMIBIOSLanguageMapper());
+    }
+
+    /**
+     * Package Private constructor with injectable dependencies
+     *
+     * @param terminalService the {@link TerminalService} instance to use, must not be {@code null}
+     * @param mapper          the mapper instance to use, must not be {@code null}
+     * @since 0.3.0
+     */
+    DMIBIOSLanguageService(@NonNull TerminalService terminalService, @NonNull DMIBIOSLanguageMapper mapper) {
+        this.terminalService = Objects.requireNonNull(terminalService, "terminalService cannot be null");
+        this.mapper = Objects.requireNonNull(mapper, "mapper cannot be null");
+    }
+
     /**
      * Retrieves BIOS language information present in the system
      * using an isolated {@code dmidecode} process with a configurable timeout.
@@ -50,9 +76,8 @@ public class DMIBIOSLanguageService implements OptionalCommonDMIServiceInterface
     @Override
     @InvokesFragileMethod(targetClass = CommonDMIMapper.class, methodType = MethodType.INTERFACE_DEFAULT_METHOD)
     public @NonNull Optional<DMIBIOSLanguage> get(long timeout) {
-        return new DMIBIOSLanguageMapper().mapToEntity(
-                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.BIOS_LANGUAGE), timeout),
-                DMIBIOSLanguage.class
-        );
+
+        TerminalResult result = terminalService.executeCommand(DMIType.BIOS_LANGUAGE, timeout);
+        return mapper.mapToEntity(result.getResult(), DMIBIOSLanguage.class);
     }
 }

@@ -10,10 +10,12 @@ import io.github.eggy03.dmidecode.constant.DMIType;
 import io.github.eggy03.dmidecode.entity.memory.DMIMemoryDevice;
 import io.github.eggy03.dmidecode.mapper.physicalmemory.DMIMemoryDeviceMapper;
 import io.github.eggy03.dmidecode.service.CommonDMIServiceInterface;
-import io.github.eggy03.dmidecode.utility.TerminalUtility;
+import io.github.eggy03.dmidecode.terminal.TerminalResult;
+import io.github.eggy03.dmidecode.terminal.TerminalService;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Service class for fetching memory device information from the system.
@@ -32,6 +34,30 @@ import java.util.List;
  */
 public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemoryDevice> {
 
+    private final TerminalService terminalService;
+    private final DMIMemoryDeviceMapper mapper;
+
+    /**
+     * Creates {@link DMIMemoryDeviceService} with default configuration.
+     *
+     * @since 0.3.0
+     */
+    public DMIMemoryDeviceService() {
+        this(new TerminalService(), new DMIMemoryDeviceMapper());
+    }
+
+    /**
+     * Package Private constructor with injectable dependencies
+     *
+     * @param terminalService the {@link TerminalService} instance to use, must not be {@code null}
+     * @param mapper          the mapper instance to use, must not be {@code null}
+     * @since 0.3.0
+     */
+    DMIMemoryDeviceService(@NonNull TerminalService terminalService, @NonNull DMIMemoryDeviceMapper mapper) {
+        this.terminalService = Objects.requireNonNull(terminalService, "terminalService cannot be null");
+        this.mapper = Objects.requireNonNull(mapper, "mapper cannot be null");
+    }
+
     /**
      * Retrieves memory device entries present in the system
      * using an isolated {@code dmidecode} process with a configurable timeout.
@@ -48,9 +74,8 @@ public class DMIMemoryDeviceService implements CommonDMIServiceInterface<DMIMemo
      */
     @Override
     public @Unmodifiable @NonNull List<DMIMemoryDevice> get(long timeout) {
-        return new DMIMemoryDeviceMapper().mapToList(
-                TerminalUtility.executeCommand(DMIType.getCommandFor(DMIType.MEMORY_DEVICE), timeout),
-                DMIMemoryDevice.class
-        );
+
+        TerminalResult result = terminalService.executeCommand(DMIType.MEMORY_DEVICE, timeout);
+        return mapper.mapToList(result.getResult(), DMIMemoryDevice.class);
     }
 }

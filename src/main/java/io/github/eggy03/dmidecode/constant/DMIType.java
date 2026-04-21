@@ -5,6 +5,8 @@
  */
 package io.github.eggy03.dmidecode.constant;
 
+import org.jspecify.annotations.NonNull;
+
 /**
  * Enumeration of DMI types as defined by the
  * {@code dmidecode} specification.
@@ -72,7 +74,8 @@ public enum DMIType {
         this.value = value;
     }
 
-    public static String getCommandFor(DMIType type) {
-        return "sudo /usr/sbin/dmidecode --type " + type.value;
+    @NonNull
+    public String getCommand() {
+        return "sudo /usr/sbin/dmidecode --type " + this.value;
     }
 }
