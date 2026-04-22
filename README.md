@@ -2,6 +2,11 @@
 [![Maven Central Version](https://img.shields.io/maven-central/v/io.github.eggy03/dmidecode4j?style=for-the-badge&color=pink)](https://central.sonatype.com/artifact/io.github.eggy03/dmidecode4j)
 ![Minimum JDK Version](https://img.shields.io/badge/Minimum%20JDK%20Version-8-blue?style=for-the-badge)
 
+> [!NOTE]  
+> The API is currently in rapid development stage.
+> While the core functionalities have been tested and is considered stable,
+> the public API contract may evolve continuously, in form of breaking changes, until a stable API is achieved.
+
 # About
 dmidecode4j is a lightweight, free Java library that parses human-readable `dmidecode` output and deserializes it into strongly-typed Java entities.
 
@@ -54,6 +59,13 @@ public class ProcessorExample {
 }
 ```
 
+# Docs
+
+- [Javadocs](https://javadoc.io/doc/io.github.eggy03/dmidecode4j)
+- [Developer Docs](//todo)
+- [Migration Guide](//todo)
+- [Examples](//todo)
+
 # Implementation Status
 
 | Number | Type                             | Status      |
@@ -100,6 +112,14 @@ public class ProcessorExample {
 | 39     | POWER_SUPPLY                     | Pending     |
 | 40     | ADDITIONAL_INFORMATION           | Pending     |
 | 41     | ONBOARD_DEVICE                   | Pending     |
+
+# Projects Using dmidecode4j
+
+1) [Nautilus](https://github.com/eggy03/Nautilus) - A cross-platform Swing based GUI application for displaying computer
+   information
+
+If you want to add your project to this list, simply create an [issue](https://github.com/eggy03/dmidecode/issues)
+with the showcase template and provide the required information.
 
 # License
 This project is licensed under the [MIT License](/LICENSE).
