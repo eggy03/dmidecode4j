@@ -19,10 +19,89 @@ The following headings may be used while categorizing the list of changes made i
 - Documentation
 - Known Issues
 
+## [0.3.0] - April 22, 2026
+
+This update introduces several breaking and non-breaking changes along with refactors only and is fully backwards
+compatible with v0.2.0, if u have not used builder methods or other accessory Immutables created methods, in your
+project.
+
+For a complete list of changes, see the following PRs:
+
+- [PR#3](https://github.com/eggy03/dmidecode4j/pull/3)
+- [PR#4](https://github.com/eggy03/dmidecode4j/pull/4)
+- [PR#5](https://github.com/eggy03/dmidecode4j/pull/5)
+
+### Breaking Changes
+
+- Fixed leaking of Immutables generated immutable implementations of abstract classes via service classes, to the public
+  API
+
+Before Immutables was introduced, entity classes were not abstract and did not have the `Abstract*` prefix either.
+They were concrete classes and the service classes had these concrete classes as their return type, for example
+`List<DMIProcessor> get();`. After Immutables was introduced, the entity classes were turned into abstract classes and
+would have the `Abstract*`prefix in their name. Immutables would scan this and create generated immutable
+implementations after removing the`Abstract*` prefix. So, an abstract class `AbstractDMIProcessor.class` would have an
+immutable implementation called
+`DMIProcessor.class`. This was fine, but entity naming meant the service classes should have returned the abstract
+instances. Instead, the return type of the service classes retained the pre-Immutable naming scheme, which meant,
+service classes would now return generated concrete implementations, instead of the actual abstract entities. This
+caused a leakage of immutable entities to the public API.
+It was originally intended for the service classes to de-serialize a JSON to its immutable instance but return the
+abstract instance, since all immutable generated sources extend the abstract classes. If there was a need to build a
+custom instance, something like the following would have been the preferred choice:
+
+```java
+DMIProcessor processor = new ImmutableDMIProcessor.Builder().build();
+// or
+DMIProcessor processor = ImmutableDMIProcessor.copyOf(someOtherProcessor).withSomeMethod(someValue);
+```
+
+where `DMIProcessor` represents the abstract class and `ImmutableDMIProcessor` is the generated immutable
+implementation.
+
+To achieve this, the `Abstract*` prefix from all the abstract classes have been removed, and `Immutable*` prefix has
+been added to all generated immutable implementations. Additionally, two Jackson annotations called
+`@JsonSerialize(as = ImmutableSomeName.class)` and `@JsonDeserialize(as = ImmutableSomeName.class)` has been added to
+all the entity classes.
+These annotations tell the Jackson mappers in the mapping layer to deserialize or serialize the input JSON as the
+immutable implementations, but when returning the value to the service layer, which is eventually returned to the user,
+it should be referenced via the abstract entity only.
+
+`JSON -> ImmutableDMIProcessor(mapping layer) -> DMIProcessor(service layer)`
+
+Obviously, this means you will not be able to access the builder methods, which is intended, because to create your
+custom builder, you must invoke the Immutable implementations directly. The abstract reference only contains the
+immutable field values.
+
+- `toString()` in entity classes no longer returns a pretty-printed JSON. The function has been delegated to `toJson()`
+  instead.
+
+### Non-Breaking Changes
+
+- Change `getCommandFor()` to an instance method `getCommand()`, in `DMIType`.
+- Rename `TerminalUtility` to `TerminalService` and refactored it to become an instance based class from utility class
+  and reduced the possibility of arbitrary command execution.
+- Refactor service classes to allow dependency injection of `TerminalService` and mappers.
+- Rename `DMIPortConnectionInformationMapper` to `DMIPortConnectorInformationMapper`.
+- Introduce default method `configureObjectMapper()`  to allow custom ObjectMapper configuration in `CommonDMIMapper`
+  interface.
+
+### Test Changes
+
+- TerminalUtilityTest has been renamed to TerminalServiceTest and individual test cases have been updated to test the
+  current contract of TerminalService methods
+- Introduce `@Mock` for `TerminalService` and `DMI[Entity]Mapper` to mock dependencies.
+- Use `@InjectMocks` for `DMI[Entity]Service` to automatically inject mocked dependencies.
+- Remove static mocking of `TerminalUtility` and instead mock `TerminalService` and mappers, and refactor the tests to
+  verify service contract, orders, instead of verifying the output of mapped data.
+- Previously, service tests would only mock `TerminalUtility` (now `TerminalService`) and the mapper would not be
+  stubbed. With this overhaul, both mappers and terminal are stubbed and verification is performed based on what got
+  executed instead, and not what was returned, since that is already tested in the mapping layer.
+
 ## [0.2.0] - April 06, 2026
 
 This update introduces several breaking changes and is not backwards compatible with the previous versions.
-For a complete list of changes, see the enclosed [PR](https://github.com/eggy03/dmidecode4j/pull/2)
+For a complete list of changes, see the enclosed [PR#2](https://github.com/eggy03/dmidecode4j/pull/2)
 
 ### Non-Breaking Changes
 
